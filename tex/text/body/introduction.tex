@@ -1,5 +1,47 @@
 \section{Introduction} \label{sec:introduction}
 
+Absent indefinitely provisioned storage capacity, at some point data eviction or digestion becomes necessary to continue processing inputs \citep{gaber2005mining}.
+This constraint is core to algorithm design for data streams, scenarios involving read-once inputs available in a strictly determinate sequence.
+In data streams, ordering may be dictated by inherently real-time processes (e.g., sensor readings) or retrieval limitations of storage media (e.g., a tape archive) \citep{henzinger1998computing}.
+The data streaming model assumes input greatly exceeds memory capacity, with many analyses simply treating streams as unbounded \citep{jiang2006research}.
+
+Data streaming scenarios pervade domain contexts across science and industry \citep{aggarwal2009data,akidau2015dataflow}.
+Commercial application areas include sensor networks \citep{elnahrawy2003research}, big-data analytics \citep{he2010comet}, real-time network traffic analysis \citep{johnson2005streams,muthukrishnan2005data}, systems administration \citep{fischer2012real}, and financial analytics for fraud prevention and algorithmic trading \citep{rajeshwari2016real,agarwal2009faster},
+Notable scientific applications arise in environmental/climate monitoring \citep{hill2009real} and astronomy \citep{graham2012data}.
+Purely-programmatic computation can also behave as a data stream --- iterative simulation processes traverse vast expanses of ephemeral intermediate state that must be traced to verify simulation dynamics and assess simulation outcomes \citep{abdulla2004simulation,schutzel2014stream}.
+
+Indeed, this broad utility has mustered an extensive corpus of algorithms that sip from data streams.
+Typical objectives include running summary statistics calculations \citep{lin2004continuously}, on-the-fly data clustering \citep{silva2013data}, live anomaly detection \citep{cai2004maids}, and rolling event frequency estimation \citep{manku2002approximate}.
+Across data stream algorithms, approaches typically draw on three key stratagems to solve the mismatch between data volume and working storage capacity: (1) rolling mechanisms, which restrict consideration to a FIFO tranche of recent data, (2) accumulation, which successively folds data into a summary statistic (e.g., sum, count, etc.) where data is repeatedly applied to a fixed amount of memory or resources, and (3) binning, which consolidates data within time intervals spaced across a stream's history to create a coarsened record.
+
+Here, we focus on the third stratagem, binning, and apply it to distributed provenance tracking for replicating digital artifacts using a technique we call ``hereditary stratigraphy.''
+Our motivating application for tracking copy trees is phylogenetic analysis of genetic algorithms and evolutionary simulations, but other areas of interest include decentralized social network content, distributed systems messaging, peer-to-peer file sharing, and computer viruses.
+In order to reconstruct histories of relatedness, we annotate replicating artifacts with a record of checkpoint fingerprints that grows by accretion with each replication event.
+Comparing two checkpoint records tells the extent of common ancestry between two artifacts, which will share common fingerprints up through their last common ancestor and then differ.
+We consider the fingerprint record as a data stream, and apply binning techniques to manage fingerprint accretion, paring down retained fingerprints while maintaining checkpoints spaced across time back to the progenitor artifact.
+We describe such rolling subset management as a ``streaming curation'' process on a data stream.
+
+Hereditary stratigraphy's tractability hinges on suitable representation of binned stream records.
+For some use cases, annotated artifacts will number millions or higher.
+Thus, annotation inefficiency may substantially burden memory, storage, and network bandwidth (i.e., serialized artifact-annotation exchange).
+Because reduced fingerprint size boosts capacity for temporal density of retained fingerprints, typical use will take fingerprints as individual bits, or possibly bytes to avoid addressability complications.
+In this context, representational overhead incurred, e.g., by explicitly storing fingerprints' individual stream sequence indices, can easily bloat annotations' footprint severalfold.
+We propose a suite of indexing schemes that reduce representational overhead for fingerprint records to a single generation-count value.
+
+Memory-efficient representation developed for hereditary stratigraphy can benefit other applications of stream curation and more general binning on data streams.
+Indeed, hardware trends promise to expand operational scenarios requiring memory-critical data stream processing.
+High-performance computing (HPC) expects to continue emphasis of scale-out with lean processing cores rather than boosting capacities of individual processing components \citep{sutter2005free,morgenstern2021unparalleled}.
+The Cerebras Wafer-Scale Engine epitomizes this trend, packaging an astounding 850,000 computing elements onto a single die.
+Individual core, however, host just 48kb of memory and operate through a exclusively-local mesh communication model \citep{cerebras2021wafer,lauterbach2021path}.
+
+As with HPC, component economization and minaturization influenced the Internet of Things (IoT) revolution \citep{rfc7228,ojo2018review}, a march potentially culminating in ``smart dust'' \citep{warneke2001smart} of downscale, low-end hardware.
+The Michigan Micro Mote platform for instance, provisions a mere 3kb of retentive memory within its cubic millimeter form factor \citep{lee2012modular}.
+More recent work has explored devices tucked within the form factor of dandelion parachutes \citep{iyer2022wind}.
+The chipset is yet more austere, provisioning 2 kilobytes of volatile flash memory --- and a mere 128 bytes of retentive memory \citep{microchip2014atiny20}.
+As engineers continue to plumb the extremities of technical feasibility, bare-bones computing modalities will persist, and applications in wireless sensor networks will necessitate lightweight data stream algorithms.
+
+%% TODO continue revisions
+
 Digital evolution is a field of research that sits at the intersection of evolutionary biology and machine learning.
 By instantiating evolution in computers, researchers are able to advance our knowledge of both subjects.
 Increasing computational power is essential to many advances in digital evolution and, more broadly, artificial life \citep{ackley2014indefinitely}.
