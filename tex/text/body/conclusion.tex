@@ -9,11 +9,11 @@ We identify five policy algorithms that provide different size/coverage trade-of
 
 We then explore postprocessing algorithms used to compare and interpret hereditary stratigraphic annotations.
 In particular, we sketch a trie-based tree reconstruction algorithm that proceeds from the underlying structure of the hereditary stratigraphy annotation.
-As a point of comparison, we provide an algorithmic formalization of the established perfect-tracking algorithms currently standard in agent-based evolutionary modeling.
-We find that both perfect tracking and hereditary stratigraphy have circumstances in which they excel.
-Hereditary stratigraphy enables tracking in noisy, parallel, and distributed environments where perfect tracking would be impractical.
-It also makes stronger guarantees about memory use (although on average perfect tracking uses less memory than most hereditary stratigraphy policies).
-Lastly, it allows different tradeoffs between data resolution, accuracy, and memory use.
+% As a point of comparison, we provide an algorithmic formalization of the established perfect-tracking algorithms currently standard in agent-based evolutionary modeling.
+% We find that both perfect tracking and hereditary stratigraphy have circumstances in which they excel.
+% Hereditary stratigraphy enables tracking in noisy, parallel, and distributed environments where perfect tracking would be impractical.
+% It also makes stronger guarantees about memory use (although on average perfect tracking uses less memory than most hereditary stratigraphy policies).
+% Lastly, it allows different tradeoffs between data resolution, accuracy, and memory use.
 %TODO talk about the take away of comparing the two
 % ELD: Took a stab at it
 
@@ -31,5 +31,5 @@ This notion invites deeper consideration of phylogenetic information encoding wi
 For example, it would be interesting to explore upper bounds on phylogenetic reconstruction accuracy given genome length for different generational depths and population sizes.
 
 Ultimately, our interest in hereditary stratigraphy and streaming curation is application-driven.
-To these ends, reference implementatons of most algorithms described are provided in the public-facing \texttt{hstrat} and \texttt{phylotackpy} Python libraries \citep{moreno2022hstrat, dolson2023phylotrackpy}.
-These libraries enable application of perfect phylogenetic tracking, hereditary stratigraphy, and streaming curation techniques in a few lines of code.
+To these ends, reference implementations of most algorithms described are provided in the public-facing \texttt{hstrat} Python library \citep{moreno2022hstrat}.
+This library makes hereditary stratigraphy and streaming curation algorithms available via a few lines of code.
