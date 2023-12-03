@@ -1,0 +1,60 @@
+\subsection{Hereditary Stratigraphy}
+
+The crux of hereditary stratigraphy is that each at generation, a new fixed-length packet of randomly-generated data is appended to inherited annotations.
+These stochastic ``fingerprints,'' typically sized on the order of a few bits or bytes, serve as a sort of checkpoint for lineage identity at a particular generation.
+At future time points, extant annotations will share identical fingerprints for the generations they experienced shared ancestry.
+
+Interestingly, a similar technique was used by \cite{libennowell2008tracing} to trace global dissemination of chain emails.
+These researchers applied \textit{post-hoc} methods to reconstruct estimated phylogenies of the propagation of two chain mail messages.
+These phylogenies then served as a reference to tune agent-based models, ultimately yielding a remarkable elucidation of email user behavior and underlying social dynamics.
+Interestingly, this study's reconstructions were solely enabled by a special peculiarity of the two sampled messages: they were email petitions.
+Thus, users would append their name to the list before forwarding it on --- a mechanism strikingly similar to the broad strokes of hereditary stratigraphy.
+
+
+Looking to natural systems, it is clear that robust phylogenetic analyses can be conducted on data generated through fully-distributed processes.
+Inspired by systematic biology, we can consider post-hoc inference from heritable data as an alternative to centralized tracking.
+
+Although such analyses can be accomplished solely from pre-existing, functional digital genome contents \citep{moreno2021case}, such algorithms do not generalize across diverse digital evolution systems and suffer from many of the complications that plague phylogenetic analyses of biological systems.
+An intriguing proposition arises: how might a genetic representation be designed to maximize ease and efficacy of phylogenetic reconstruction?
+If sufficiently compact, such a representation could be attached as a non-functional annotation to facilitate phylogenetic inference over genomes of interest.
+This line of reasoning led to the recent development of ``hereditary stratigraphy'' methodology, which associates digital genomes with heritable annotations specially designed to provide universal system-invariant phylogenetic reconstruction with well-defined, tunable expectations for inference accuracy
+\citep{moreno2022hereditary}.
+
+
+Digital evolution is a field of research that sits at the intersection of evolutionary biology and machine learning.
+By instantiating evolution in computers, researchers are able to advance our knowledge of both subjects.
+Increasing computational power is essential to many advances in digital evolution and, more broadly, artificial life \citep{ackley2014indefinitely}.
+In fact, a central motif in the field --- the problem of open-ended evolution, which asks how and if closed systems can indefinitely yield new complexity, novelty, and adaptation --- is inexorably intertwined with computational scale, and has been implicated as meaningfully compute-constrained in at least some systems \citep{taylor2016open,channon2019maximum}.
+It is not an unreasonable possibility that orders-of-magnitude changes in computational power could induce qualitative changes in digital evolution and artificial life systems \citep{moreno2022engineering}, analogously to the renaissance of deep learning with the advent of GPGPU computing \citep{krizhevsky2012imagenet}.
+
+% ELD: TODO: consider cutting this paragraph
+Parallel and distributed computing is, indeed, widely leveraged in digital evolution.
+Applications range from processing entirely independent evolutionary replicates across compute jobs \citep{dolson2017spatial, hornby2006automated}, to data-parallel fitness evaluation of single individuals over independent test cases using hardware accelerators \citep{harding2007fast_springer, langdon2019continuous}, to application of primary-subordinate/controller-responder parallelism to delegate costly fitness evaluations of single individuals \citep{cantu2001master,miikkulainen2019evolving}.
+In recent years, Sentient Technologies spearheaded evolutionary computation projects on an unprecedented computational scale, comprising over a million heterogeneous CPUs from time-available providers capable of a peak performance of 9 petaflops \citep{miikkulainen2019evolving,gilbert2015artificial,blondeau2009distributed}.
+
+Although highlighted as key to the future of the field, fully decentralized, highly-distributed approaches such as island models \citep{bennett1999building,schulte2010genetic} and mesh-computing approaches prioritizing dynamic interactions \citep{ray1995proposal,ackley2018digital,moreno2021conduit} have been less thoroughly developed.
+A major barrier to effective applications of the fully-distributed paradigm is the difficulty of observing the state of the system.
+In the absence of a global population-level view, the course of evolution becomes much more challenging to study --- undercutting the objective of these systems as an experimental tool.
+A prime example of this problem is the difficulty of recording phylogenies (i.e. ancestry trees) in distributed systems.
+
+Although phylogenetic analysis is a powerful tool for understanding digital evolution \citep{dolson2020interpreting}, typical approaches are particularly difficult to scale. %poses a particularly problematic stumbling block.
+Most existing analyses use direct lineage tracking, where a centralized data structure collates individual reproduction events to produce a complete, perfect phylogenetic record \citep{dolson2023phylotrackpy}.
+However, this approach requires centralized data storage which performs poorly in distributed computing environments. % TODO cite preprint
+
+The problem of recording phylogenies in a distributed context generalizes beyond digital evolution.
+Phylogenies can be used to understand any process in which a population of objects exist and those objects are sometimes replicated (with or without modification).
+Indeed, phylogenetic techniques have been used to study the routes through which digital image misinformation and computer viruses spread \citep{friggeri2014rumor,cohen1987computer}.
+As in digital evolution, such studies generally rely on centralized tracking and are thus inhibited when it is not possible.
+As a notable exception, Libennowell et al. used decentralized methods to trace global dissemination of chain emails.
+Intriguingly, discussed further below, this work exploit sa serendipitous instance of the mechanistic principle our proposed algorithms exploit \cite{libennowell2008tracing}.
+
+As such, hereditary stratigraphic techniques certainly possess some potential afford experimenters visibility into the otherwise cloistered processes through which such digital artifacts spread.
+Notably, though, such experiments would predicate on some level of influence over the artifact copy process in to ensure dispatch of the hereditary stratigraphic update process and the absence of actors with motivation and capability to antagonistically deface annotation data.
+
+% TODO also tie in the algorithmic analysis of phylogenies here
+% ELD: TODO: See if any of the points below aren't made in the perfect tracking section, and if not move them
+% However, long distance, potentially many-hop, transmission of reproduction event records to a centralized data store introduces potentially significant amounts of communication overhead and bottlenecking.
+% The necessity to propagate extinction notifications at runtime so that records of lineages without extant descendants can be pruned away to prevent runaway memory use imposes additional communication overhead.
+% Further, at large enough scales, node failures become inevitablies rather than inconveniences and, at even larger scales, the cost of attempting full recovery from node dropout to prevent data loss could become high enough to conceivably preclude forward simulation progress \citep{cappello2014toward}.
+% Within the perfect-tracking paradigm, individual missing relationships could potentially entirely disjoin knowledge of how large portions of phylogenetic history relate.
+% This sensitivity to data loss poses a second major challenge in scaling perfect tracking.
