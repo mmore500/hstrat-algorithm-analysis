@@ -81,36 +81,14 @@ Looser relations include work on ``amnesic approximation'' a generalized scheme 
 
 \subsubsection{Applications of Streaming Curation}
 
-Memory-efficient representation developed for hereditary stratigraphy can benefit other applications of stream curation and more general binning on data streams.
+The correspondences between stream curation and more general binning on data streams open avenues apply stratum curation policy algorithms in various data stream scenarios.
 
-Early days of computing were marked by resource scarcity.
-As desktop computing has advanced, this becomes less salient \citep{kushida2015cloud}.
+Perhaps most plainly, the down sampling task faced by hereditary stratigraph annotations parallel those faced by data logger devices.
+Unattended loggers manage incoming observation streams on a potentially indefinite or indeterminate basis.
+Devices incorporated into wireless sensor networks also experience irregular device uplink schedules.
+The ``mobile sink'' paradigm \citep{jain2022survey}, for example relies on network base station(s) physically traverse the coverage area and transact with nearby sensor nodes.
+Sporadic patrol schedules can thus introduce uncertainty in data transfer schedules.
 
-However, hardware trends promise to expand operational scenarios requiring memory-critical data stream processing.
-High-performance computing (HPC) expects to continue emphasis of scale-out with lean processing cores rather than boosting capacities of individual processing components \citep{sutter2005free,morgenstern2021unparalleled}.
-The Cerebras Wafer-Scale Engine epitomizes this trend, packaging an astounding 850,000 computing elements onto a single die.
-Individual core, however, host just 48kb of memory and operate through a exclusively-local mesh communication model \citep{cerebras2021wafer,lauterbach2021path}.
-
-As with HPC, component economization and minaturization influenced the Internet of Things (IoT) revolution \citep{rfc7228,ojo2018review}, a march potentially culminating in ``smart dust'' \citep{warneke2001smart} of downscale, low-end hardware.
-The Michigan Micro Mote platform for instance, provisions a mere 3kb of retentive memory within its cubic millimeter form factor \citep{lee2012modular}.
-More recent work has explored devices tucked within the form factor of dandelion parachutes \citep{iyer2022wind}.
-The chipset is yet more austere, provisioning 2 kilobytes of volatile flash memory --- and a mere 128 bytes of retentive memory \citep{microchip2014atiny20}.
-As engineers continue to plumb the extremities of technical feasibility, bare-bones computing modalities will persist, and applications in wireless sensor networks will necessitate lightweight data stream algorithms.
-
-Stepping back, the online filtering obligations faced by hereditary stratigraph annotations are not unlike those faced by unattended data logger devices.
-Both manage incoming observation streams on a potentially indefinite or indeterminate basis and both operate under storage space limitations.
-Further, both are presumedly tasked to operate under some stipulation for time coverage, whether simply rolling full retention of most recent data within available buffer space \citep{fincham1995use}, dismissal of incoming data after storage reaches capacity \citep{saunders1989portable,mahzan2017design}, best-effort even coverage of the elapsed period, or otherwise.
-Even high-capacity devices may experience overflow conditions when confronted with high-frequency data streams \citep{luharuka2003design}.
-
-There has been some work to extend the record capacity of data loggers through application-specific online compression algorithms \citep{hadiatna2016design},
-
-Some of the same curation policy algorithms we propose for stratum retention could also be useful in these cases.
-For example, organization of IoT devices into wireless sensor networks is expected, in a considerable fraction of cases, to structure irregular device uplink schedules, such as the ``mobile sink'' paradigm \citep{jain2022survey}.
-Under this model, network base station(s) physically traverse the coverage area and transact with nearby sensor nodes.
-Reliance on the mobile sink's patrol schedule potentially introduces uncertainty in data transfer schedules.
-
-Recency-proportional retention may suit some applications, where time intervals of interest may be flagged well after the fact, but tend to bias toward the recent past.
-Finally, streaming curation may even pertain to record management in large capacity centralized storage systems in some scenarios \citep{bhat2018data}.
-
-
-There has been some work to extend the record capacity of data loggers through application-specific online compression algorithms \citep{hadiatna2016design}
+Reported strategies to handle stream data in excess of storage capacity on loggers include rolling full retention of most recent data within available buffer space \citep{fincham1995use} and dismissal of incoming data after storage reaches capacity \citep{saunders1989portable,mahzan2017design},
+Strategies to maintain a cross-sectional time sample do not appear to be widely exploited, although there has been some work to extend the record capacity of data loggers through application-specific online compression algorithms \citep{hadiatna2016design}.
+Storage-limited platforms might suit proposed memory-efficient stream curation procedures.
