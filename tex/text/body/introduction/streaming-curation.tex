@@ -9,13 +9,13 @@ Streaming curation relates directly to the concept of binning in data streams, w
 
 Stream curation algorithms must answer how many observations should be kept at any point in time, but also how retained observations should be spaced out over past time.
 Appropriate choices vary by use case, and no stream curation policy can meet requirements of all use cases.
-For this reason, we consider a spectrum of balances between two factors: size limitation, i.e., how many observations may be retained, and resolution guarantees, i.e., maximum window sizes.
+For this reason, we consider a spectrum of balances between two factors: size limitation, i.e., how many observations may be retained, and resolution guarantees, i.e., maximum gap sizes.
 For each space-resolution stipulation profile, we provide an implementation algorithm meeting criteria of computational reducibility and self-consistency, defined below.
 After discussing policy stipulation criteria and policy implementation for stream curation, we close with connections to existing work and potential applications.
 
 \subsubsection{Stream Curation Policy Stipulation}
 
-Functional requirements for stream curation policy delineate collection size, i.e., total observations retained, and window size, i.e., length of time gaps between retained observations.
+Functional requirements for stream curation policy delineate collection size, i.e., total observations retained, and gap size, i.e., length of time windows between retained observations.
 
 For the former, we specify bounds on retained observation count as fixed or a function of time elapsed.
 We refer asymptotic bounds on the scaling relationship between size and time as  the ``size order of growth.''
