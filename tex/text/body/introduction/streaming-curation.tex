@@ -15,21 +15,27 @@ After discussing policy stipulation criteria and policy implementation for strea
 
 \subsubsection{Stream Curation Policy Stipulation}
 
-Size Cap and Order of Growth
-(asymptotic and/or hard bounds)
+Functional requirements for stream curation policy delineate collection size, i.e., total observations retained, and window size, i.e., length of time gaps between retained observations.
 
-With respect to memory usage, we refer to guaranteed upper bounds as ``size order of growth'' in the asymptotic case with respect to elapsed generations or ``size cap'' in the absolute case.
-We refer to bounds on spacing between retained strata a ``resolution guarantee.''
+For the former, we specify bounds on retained observation count as fixed or a function of time elapsed.
+We refer asymptotic bounds on the scaling relationship between size and time as  the ``size order of growth.''
+We also define hard bounds, referred to as ``size cap,'' vis-a-vis practical considerations, e.g., fixed size memory allocation for curated collection storage.
 
-Resolution guarantee specification incorporates both the total number of generations elapsed and the historical depth of a particular time point in the stratigraphic record --- so, bounding is tailored within these particular circumstances.
+Bounds on spacing between retained observations, ``resolution guarantee,'' may depend on both the total number of generations elapsed but the historical depth of a particular time point in the stratigraphic record.
+Again, we treat both asymptotic and hard bounds.
+Considering historical depth provides for configurability of skew in observation density.
+Strata from evenly-spaced time points may retain uniform detail over the entire range of elapsed time points.
+Alternately, retention allocations may space successive retained observations proportionately to historical depth.
+Such an approach biases observational detail to recent time.
+Our surveyed policy stipulations include both even and recency-proportional resolutions.
 
-A common question being whether to distribute bin density evenly over history or to bias information to recent events.
+In the context of hereditary stratigraphy, recency-proportional resolution is typically preferable.
+Coalescent theory predicts a tendency for evolution-like processes to produce phylogenies with many recent branches and progressively fewer ancient branches \citep{nordborgCoalescentTheory2019, berestyckiRecentProgressCoalescent2009}.
+Thus, fine inferential detail over recent time points is usually more informative to phylogenetic reconstruction than detail over more ancient time points.
+Indeed, experiments reconstructing known lineages have shown that recency-skewing retention provides better quality reconstructions \citep{moreno2022hereditary}.
 
-Note that size bounds and resolution guarantees are enforced across all generations.
-Thus, stratum retention policies must manage ``online'' column composition across rolling generations.
-Indeed, for many use cases, resolution and column size guarantees will need to hold at all generations because the number of generations elapsed at the end of an experiment is often not known \textit{a priori} and the option of continuing a fixed-length experiment with evolved genomes is desired.
-This factor introduces a design subtlety: as generations elapse, deposited strata recede to increasingly ancient historical depth with respect to the current generation.
-Resolution guarantees may change along the way back.
+Note that size bounds and resolution guarantees must hold across all time points, necessitated by use cases where observation collections will see sustained use over time or the endpoint for an observation collection is indeterminate (e.g., computations with a real-time termination condition).
+This factor introduces design subtlety: as generations elapse and observations become more ancient, resolution guarantees may shift.
 In those cases, cohorts of retained strata must, in dwindling, gracefully morph through a constrained series of retention patterns.
 
 \subsubsection{Stream Curation Policy Algorithms}
