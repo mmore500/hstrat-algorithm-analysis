@@ -15,55 +15,55 @@ After discussing policy stipulation criteria and policy implementation for strea
 
 \subsubsection{Stream Curation Policy Stipulation}
 
-Size Cap and Order of Growth
-(asymptotic and/or hard bounds)
+Functional requirements for stream curation policy delineate collection size, i.e., total observations retained, and window size, i.e., length of time gaps between retained observations.
 
-With respect to memory usage, we refer to guaranteed upper bounds as ``size order of growth'' in the asymptotic case with respect to elapsed generations or ``size cap'' in the absolute case.
-We refer to bounds on spacing between retained strata a ``resolution guarantee.''
+For the former, we specify bounds on retained observation count as fixed or a function of time elapsed.
+We refer asymptotic bounds on the scaling relationship between size and time as  the ``size order of growth.''
+We also define hard bounds, referred to as ``size cap,'' vis-a-vis practical considerations, e.g., fixed size memory allocation for curated collection storage.
 
-Resolution guarantee specification incorporates both the total number of generations elapsed and the historical depth of a particular time point in the stratigraphic record --- so, bounding is tailored within these particular circumstances.
+Bounds on spacing between retained observations, ``resolution guarantee,'' may depend on both the total number of generations elapsed but the historical depth of a particular time point in the stratigraphic record.
+Again, we treat both asymptotic and hard bounds.
+Considering historical depth provides for configurability of skew in observation density.
+Strata from evenly-spaced time points may retain uniform detail over the entire range of elapsed time points.
+Alternately, retention allocations may space successive retained observations proportionately to historical depth.
+Such an approach biases observational detail to recent time.
+Our surveyed policy stipulations include both even and recency-proportional resolutions.
 
-A common question being whether to distribute bin density evenly over history or to bias information to recent events.
+In the context of hereditary stratigraphy, recency-proportional resolution is typically preferable.
+Coalescent theory predicts a tendency for evolution-like processes to produce phylogenies with many recent branches and progressively fewer ancient branches \citep{nordborgCoalescentTheory2019, berestyckiRecentProgressCoalescent2009}.
+Thus, fine inferential detail over recent time points is usually more informative to phylogenetic reconstruction than detail over more ancient time points.
+Indeed, experiments reconstructing known lineages have shown that recency-skewing retention provides better quality reconstructions \citep{moreno2022hereditary}.
 
-Note that size bounds and resolution guarantees are enforced across all generations.
-Thus, stratum retention policies must manage ``online'' column composition across rolling generations.
-Indeed, for many use cases, resolution and column size guarantees will need to hold at all generations because the number of generations elapsed at the end of an experiment is often not known \textit{a priori} and the option of continuing a fixed-length experiment with evolved genomes is desired.
-This factor introduces a design subtlety: as generations elapse, deposited strata recede to increasingly ancient historical depth with respect to the current generation.
-Resolution guarantees may change along the way back.
+Note that size bounds and resolution guarantees must hold across all time points, necessitated by use cases where observation collections will see sustained use over time or the endpoint for an observation collection is indeterminate (e.g., computations with a real-time termination condition).
+This factor introduces design subtlety: as generations elapse and observations become more ancient, resolution guarantees may shift.
 In those cases, cohorts of retained strata must, in dwindling, gracefully morph through a constrained series of retention patterns.
 
 \subsubsection{Stream Curation Policy Algorithms}
 
-Computational Reducibility and Self-Consistency
+A streaming curation policy algorithm produces a sequence of observation retention sets, one for each time point.
+First and foremost, each of an algorithm's retention sets should satisfy stipulated requirements on collection size and gap size.
 
-In addition to their particular size bounds and resolution guarantees, we demonstrate all proposed stratum retention algorithms satisfy two nuts and bolts algorithmic considerations:
-\begin{enumerate}
+To be viable, each retention set's complement (i.e., discarded observations) must superset the complement of all preceding retention sets.
+Otherwise, a discarded observation would be called for inclusion.
+Put another way, policy algorithms must ensure no retained observations have been discarded at a prior time point.
+We call this property self-consistency.
 
-\item \textbf{Stratum discard sequencing for ``self-consistency.''}
-  When you discard a stratum now, it won't be available later.
-  If you need a stratum at a particular time point, you must be able to guarantee it hasn't already been discarded at any prior time point.
+We impose a further nuts-and-bolts requirement on algorithm implementation: computational reducibility, meaning that time points retained at every position in the observation sequence must be directly enumerable.
+This capability enables observations' time point to be deduced positionally, so observation time points may be omitted from an observation set's representation.
+In the context of hereditary stratigraphy, several-fold space savings may result (depending on differentia bit width).
 
-\end{enumerate}
+Since the austere early days of computing, typical hardware has trended away from resource scarcity, making lean memory use less salient \citep{kushida2015cloud}.
+Nevertheless, memory efficiency remains crucial in certain contexts where hardware trends have stagnated or even regressed memory capacity,
 
-\item \textbf{Tractability of directly enumerating deposition time of retained strata at any arbitrary generation.} Efficient computation of the deposition times retained at each time point provides a tractable reverse mapping from column array index to deposition generation.
-  Such a mapping enables deposition generation to be omitted from stored strata, potentially yielding several-fold space savings (depending on the differentia bit width used).
+High-performance computing (HPC) expects to continue emphasis of scale-out with lean processing cores rather than boosting capacities of individual processing components \citep{sutter2005free,morgenstern2021unparalleled}.
+The Cerebras Wafer-Scale Engine epitomizes this trend, packaging an astounding 850,000 computing elements onto a single die.
+Individual core, however, host just 48kb of memory and operate through a exclusively-local mesh communication model \citep{cerebras2021wafer,lauterbach2021path}.
 
-\item \textbf{Capability to enumerate discarded strata in constant time}
-
-Lightweight
-
-
-\subsubsection{Existing Work}
-
-\subsubsection{Applications of Stream Curation}
-
-Determining stratum retention strategy also raises a more subtle second consideration: what skew, if any, to induce on the composition of retained strata.
-Strata from evenly-spaced time points may be retained in order to provide uniform inferential detail over the entire range of elapsed time points.
-However, coalescent theory predicts that evolution-like processes will tend to produce phylogenies with many recent branches and progressively fewer more ancient branches \citep{nordborgCoalescentTheory2019, berestyckiRecentProgressCoalescent2009}.
-Thus, fine inferential detail over more recent time points is usually more informative to phylogenetic reconstruction than fine detail over more ancient time points.
-Thus, among a fixed-size retained sampling of time points, skewing the composition of retained strata to over-represent more recent time points would likely provide better bang for the buck with respect to reconstructive power.
-Indeed, experiments reconstructing known lineages have shown that recency-skewing retention provides better quality reconstructions \citep{moreno2022hereditary}.
-So, in addition to evenly-spaced retention, we consider retention allocations that yield gap widths between successive retained strata (and corresponding estimation uncertainty) scaled proportionately to those strata's depth back in history.
+As with HPC, component economization and minaturization influenced the Internet of Things (IoT) revolution \citep{rfc7228,ojo2018review}, a march potentially culminating in ``smart dust'' \citep{warneke2001smart} of downscale, low-end hardware.
+The Michigan Micro Mote platform for instance, provisions a mere 3kb of retentive memory within its cubic millimeter form factor \citep{lee2012modular}.
+More recent work has explored devices tucked within the form factor of dandelion parachutes \citep{iyer2022wind}.
+The chipset is yet more austere, provisioning 2 kilobytes of volatile flash memory --- and a mere 128 bytes of retentive memory \citep{microchip2014atiny20}.
+As engineers continue to plumb the extremities of technical feasibility, bare-bones computing modalities will persist, and applications in wireless sensor networks will necessitate lightweight data stream algorithms.
 
 \subsubsection{Existing Work}
 
