@@ -1,58 +1,86 @@
-\subsection{Streaming Curation}
+\subsection{Stream Curation}
 
-Memory-efficient representation developed for hereditary stratigraphy can benefit other applications of stream curation and more general binning on data streams.
-Indeed, hardware trends promise to expand operational scenarios requiring memory-critical data stream processing.
-High-performance computing (HPC) expects to continue emphasis of scale-out with lean processing cores rather than boosting capacities of individual processing components \citep{sutter2005free,morgenstern2021unparalleled}.
-The Cerebras Wafer-Scale Engine epitomizes this trend, packaging an astounding 850,000 computing elements onto a single die.
-Individual core, however, host just 48kb of memory and operate through a exclusively-local mesh communication model \citep{cerebras2021wafer,lauterbach2021path}.
+Under an iterative model, time operates something like a first-in, nothing-out queue --- successive time steps simply pile on ad infinitum.
+As time accumulates, an elapsed time step recedes ever deeper.
+A discrete event's time point does not change, but its relation to the present does.  % cite xckd 1477?
+This inevitability is crux to the stream curation problem, which we establish to describe rolling maintenance of a temporally representative cross-section of sequenced observations.
+For the sake of generality, we employ this framing to discuss stratum retention strategies for hereditary stratigraphy.
+Streaming curation relates directly to the concept of binning in data streams, which we discuss further below.
 
-As with HPC, component economization and minaturization influenced the Internet of Things (IoT) revolution \citep{rfc7228,ojo2018review}, a march potentially culminating in ``smart dust'' \citep{warneke2001smart} of downscale, low-end hardware.
-The Michigan Micro Mote platform for instance, provisions a mere 3kb of retentive memory within its cubic millimeter form factor \citep{lee2012modular}.
-More recent work has explored devices tucked within the form factor of dandelion parachutes \citep{iyer2022wind}.
-The chipset is yet more austere, provisioning 2 kilobytes of volatile flash memory --- and a mere 128 bytes of retentive memory \citep{microchip2014atiny20}.
-As engineers continue to plumb the extremities of technical feasibility, bare-bones computing modalities will persist, and applications in wireless sensor networks will necessitate lightweight data stream algorithms.
+Stream curation algorithms must answer how many observations should be kept at any point in time, but also how retained observations should be spaced out over past time.
+Appropriate choices vary by use case, and no stream curation policy can meet requirements of all use cases.
+For this reason, we consider a spectrum of balances between two factors: size limitation, i.e., how many observations may be retained, and resolution guarantees, i.e., maximum window sizes.
+For each space-resolution stipulation profile, we provide an implementation algorithm meeting criteria of computational reducibility and self-consistency, defined below.
+After discussing policy stipulation criteria and policy implementation for stream curation, we close with connections to existing work and potential applications.
 
-Stepping back, the online filtering obligations faced by hereditary stratigraph annotations are not unlike those faced by unattended data logger devices.
-Both manage incoming observation streams on a potentially indefinite or indeterminate basis and both operate under storage space limitations.
-Further, both are presumedly tasked to operate under some stipulation for time coverage, whether simply rolling full retention of most recent data within available buffer space \citep{fincham1995use}, dismissal of incoming data after storage reaches capacity \citep{saunders1989portable,mahzan2017design}, best-effort even coverage of the elapsed period, or otherwise.
-Even high-capacity devices may experience overflow conditions when confronted with high-frequency data streams \citep{luharuka2003design}.
+\subsubsection{Stream Curation Policy Stipulation}
 
-Restated explicitly, these scenarios confront a question of how to satisfactorily maintain a temporally representative cross section of observations that stream in on a rolling basis.
-We propose this problem as the ``stream curation problem.''
-For the sake of generalizability, Section \ref{sec:annotation-algorithms} organizes presentation of stratum retention algorithms through the lens of the streaming curation problem.
-There has been some work to extend the record capacity of data loggers through application-specific online compression algorithms \citep{hadiatna2016design}, but to our knowledge the streaming curation problem has not been treated directly from either a theoretical or empirical vantage.
+Size Cap and Order of Growth
+(asymptotic and/or hard bounds)
 
+With respect to memory usage, we refer to guaranteed upper bounds as ``size order of growth'' in the asymptotic case with respect to elapsed generations or ``size cap'' in the absolute case.
+We refer to bounds on spacing between retained strata a ``resolution guarantee.''
 
-Some of the same curation policy algorithms we propose for stratum retention could also be useful in these cases.
-For example, organization of IoT devices into wireless sensor networks is expected, in a considerable fraction of cases, to structure irregular device uplink schedules, such as the ``mobile sink'' paradigm \citep{jain2022survey}.
-Under this model, network base station(s) physically traverse the coverage area and transact with nearby sensor nodes.
-Reliance on the mobile sink's patrol schedule potentially introduces uncertainty in data transfer schedules.
-
-Recency-proportional retention may suit some applications, where time intervals of interest may be flagged well after the fact, but tend to bias toward the recent past.
-Finally, streaming curation may even pertain to record management in large capacity centralized storage systems in some scenarios \citep{bhat2018data}.
-
-
-%% TODO continue revisions
-
-Lightweight
-
-There has been some work to extend the record capacity of data loggers through application-specific online compression algorithms \citep{hadiatna2016design}, but to our knowledge the streaming curation problem has not been treated directly from either a theoretical or empirical vantage.
-
-
-
+Resolution guarantee specification incorporates both the total number of generations elapsed and the historical depth of a particular time point in the stratigraphic record --- so, bounding is tailored within these particular circumstances.
 
 A common question being whether to distribute bin density evenly over history or to bias information to recent events.
 
-running or rolling, where you just consider the latest data, and binning, where you group and summarization
-Among data streOne common device.
-Across data stream algorithms, common operations include A, B, and C
+Note that size bounds and resolution guarantees are enforced across all generations.
+Thus, stratum retention policies must manage ``online'' column composition across rolling generations.
+Indeed, for many use cases, resolution and column size guarantees will need to hold at all generations because the number of generations elapsed at the end of an experiment is often not known \textit{a priori} and the option of continuing a fixed-length experiment with evolved genomes is desired.
+This factor introduces a design subtlety: as generations elapse, deposited strata recede to increasingly ancient historical depth with respect to the current generation.
+Resolution guarantees may change along the way back.
+In those cases, cohorts of retained strata must, in dwindling, gracefully morph through a constrained series of retention patterns.
 
+\subsubsection{Stream Curation Policy Algorithms}
+
+Computational Reducibility and Self-Consistency
+
+In addition to their particular size bounds and resolution guarantees, we demonstrate all proposed stratum retention algorithms satisfy two nuts and bolts algorithmic considerations:
+\begin{enumerate}
+
+\item \textbf{Stratum discard sequencing for ``self-consistency.''}
+  When you discard a stratum now, it won't be available later.
+  If you need a stratum at a particular time point, you must be able to guarantee it hasn't already been discarded at any prior time point.
+
+\end{enumerate}
+
+\item \textbf{Tractability of directly enumerating deposition time of retained strata at any arbitrary generation.} Efficient computation of the deposition times retained at each time point provides a tractable reverse mapping from column array index to deposition generation.
+  Such a mapping enables deposition generation to be omitted from stored strata, potentially yielding several-fold space savings (depending on the differentia bit width used).
+
+\item \textbf{Capability to enumerate discarded strata in constant time}
+
+Lightweight
+
+
+\subsubsection{Existing Work}
+
+\subsubsection{Applications of Stream Curation}
+
+Determining stratum retention strategy also raises a more subtle second consideration: what skew, if any, to induce on the composition of retained strata.
+Strata from evenly-spaced time points may be retained in order to provide uniform inferential detail over the entire range of elapsed time points.
+However, coalescent theory predicts that evolution-like processes will tend to produce phylogenies with many recent branches and progressively fewer more ancient branches \citep{nordborgCoalescentTheory2019, berestyckiRecentProgressCoalescent2009}.
+Thus, fine inferential detail over more recent time points is usually more informative to phylogenetic reconstruction than fine detail over more ancient time points.
+Thus, among a fixed-size retained sampling of time points, skewing the composition of retained strata to over-represent more recent time points would likely provide better bang for the buck with respect to reconstructive power.
+Indeed, experiments reconstructing known lineages have shown that recency-skewing retention provides better quality reconstructions \citep{moreno2022hereditary}.
+So, in addition to evenly-spaced retention, we consider retention allocations that yield gap widths between successive retained strata (and corresponding estimation uncertainty) scaled proportionately to those strata's depth back in history.
+
+\subsubsection{Existing Work}
+
+
+% autocannabilism https://epubs.siam.org/doi/pdf/10.1137/1.9781611972795.8
+% visual sedimentation https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6634152
+
+Closely related to tilted-time sampling \citep{giannella2003mining,han2005stream}
+
+\citep{zhao2005generalized} <-- merging windows
+
+\citep{palpanas2004online} <-- custom amnesiac function
 
 windowing (tilted-time) natural time \citep{giannella2003mining}
 
 dimension-reduction \citep{zhao2005generalized}
 amnesic functions \citep{palpanas2008streaming}
-We refer to it as the stream curation problem,
 
 
 @article{zhao2005generalized,
@@ -92,19 +120,39 @@ We refer to it as the stream curation problem,
   organization = {Elsevier}
 }
 
-We provide C++ and Python implementations in the accompanying \texttt{hstrat} library \citep{moreno2022hstrat}.
 
+\subsubsection{Applications of Streaming Curation}
+
+Memory-efficient representation developed for hereditary stratigraphy can benefit other applications of stream curation and more general binning on data streams.
 
 Early days of computing were marked by resource scarcity.
-As desktop computing has advanced, this becomes less salient.
+As desktop computing has advanced, this becomes less salient \citep{kushida2015cloud}.
 
-For the sake of generalizability, Section \ref{sec:annotation-algorithms} organizes presentation of stratum retention algorithms through the lens of the streaming curation problem.
+However, hardware trends promise to expand operational scenarios requiring memory-critical data stream processing.
+High-performance computing (HPC) expects to continue emphasis of scale-out with lean processing cores rather than boosting capacities of individual processing components \citep{sutter2005free,morgenstern2021unparalleled}.
+The Cerebras Wafer-Scale Engine epitomizes this trend, packaging an astounding 850,000 computing elements onto a single die.
+Individual core, however, host just 48kb of memory and operate through a exclusively-local mesh communication model \citep{cerebras2021wafer,lauterbach2021path}.
 
-% autocannabilism https://epubs.siam.org/doi/pdf/10.1137/1.9781611972795.8
-% visual sedimentation https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6634152
+As with HPC, component economization and minaturization influenced the Internet of Things (IoT) revolution \citep{rfc7228,ojo2018review}, a march potentially culminating in ``smart dust'' \citep{warneke2001smart} of downscale, low-end hardware.
+The Michigan Micro Mote platform for instance, provisions a mere 3kb of retentive memory within its cubic millimeter form factor \citep{lee2012modular}.
+More recent work has explored devices tucked within the form factor of dandelion parachutes \citep{iyer2022wind}.
+The chipset is yet more austere, provisioning 2 kilobytes of volatile flash memory --- and a mere 128 bytes of retentive memory \citep{microchip2014atiny20}.
+As engineers continue to plumb the extremities of technical feasibility, bare-bones computing modalities will persist, and applications in wireless sensor networks will necessitate lightweight data stream algorithms.
 
-Closely related to tilted-time sampling \citep{giannella2003mining,han2005stream}
+Stepping back, the online filtering obligations faced by hereditary stratigraph annotations are not unlike those faced by unattended data logger devices.
+Both manage incoming observation streams on a potentially indefinite or indeterminate basis and both operate under storage space limitations.
+Further, both are presumedly tasked to operate under some stipulation for time coverage, whether simply rolling full retention of most recent data within available buffer space \citep{fincham1995use}, dismissal of incoming data after storage reaches capacity \citep{saunders1989portable,mahzan2017design}, best-effort even coverage of the elapsed period, or otherwise.
+Even high-capacity devices may experience overflow conditions when confronted with high-frequency data streams \citep{luharuka2003design}.
 
-\citep{zhao2005generalized} <-- merging windows
+There has been some work to extend the record capacity of data loggers through application-specific online compression algorithms \citep{hadiatna2016design},
 
-\citep{palpanas2004online} <-- custom amnesiac function
+Some of the same curation policy algorithms we propose for stratum retention could also be useful in these cases.
+For example, organization of IoT devices into wireless sensor networks is expected, in a considerable fraction of cases, to structure irregular device uplink schedules, such as the ``mobile sink'' paradigm \citep{jain2022survey}.
+Under this model, network base station(s) physically traverse the coverage area and transact with nearby sensor nodes.
+Reliance on the mobile sink's patrol schedule potentially introduces uncertainty in data transfer schedules.
+
+Recency-proportional retention may suit some applications, where time intervals of interest may be flagged well after the fact, but tend to bias toward the recent past.
+Finally, streaming curation may even pertain to record management in large capacity centralized storage systems in some scenarios \citep{bhat2018data}.
+
+
+There has been some work to extend the record capacity of data loggers through application-specific online compression algorithms \citep{hadiatna2016design}
