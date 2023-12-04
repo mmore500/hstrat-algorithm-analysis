@@ -67,59 +67,17 @@ As engineers continue to plumb the extremities of technical feasibility, bare-bo
 
 \subsubsection{Existing Work}
 
+Stream curation relates to existing binning procedures that group together and consolidate contiguous subsections of a data stream.
 
-% autocannabilism https://epubs.siam.org/doi/pdf/10.1137/1.9781611972795.8
-% visual sedimentation https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6634152
+The fixed-resolution policy algorithm presented here is simple downsampling via decimation \citep[p. 31]{crochiere1983multirate}
+Our depth-proportional resolution (Section \ref{sec:depth-proportional-resolution-algo}) and recency-proportional resolution (Section \ref{sec:recency-proportional-resolution-algo}) algorithms share close structural similarity with the online equi-segmented and vari-segmented schemes proposed in
+\citep{zhao2005generalized}.
+The depth-proportional resolution structure additionally appears as``pyramidal'' and ``tilted'' time window schemes \citep{aggarwal2003framework,han2005stream}.
+However, provided implementations all unfold through stateful iteration, with representational overhead for each stored value (viz. segment length values).
+To our knowledge, stateless enumerations of retained set composition are original to this work.
+We are also not aware of existing equivalents or near-equivalents of presented geometric sequence $n$th root or curbed recency-proportional resolution policy algorithms (Sections \ref{sec:geom-seq-nth-root-algo} and \ref{sec:curbed-recency-proportional-resolution-algo}).
 
-Closely related to tilted-time sampling \citep{giannella2003mining,han2005stream}
-
-\citep{zhao2005generalized} <-- merging windows
-
-\citep{palpanas2004online} <-- custom amnesiac function
-
-windowing (tilted-time) natural time \citep{giannella2003mining}
-
-dimension-reduction \citep{zhao2005generalized}
-amnesic functions \citep{palpanas2008streaming}
-
-
-@article{zhao2005generalized,
-  title     = {Generalized dimension-reduction framework for recent-biased time series analysis},
-  author    = {Zhao, Yanchang and Zhang, Shichao},
-  journal   = {IEEE Transactions on Knowledge and Data Engineering},
-  volume    = {18},
-  number    = {2},
-  pages     = {231--244},
-  year      = {2005},
-  publisher = {IEEE}
-}
-@inproceedings{palpanas2004online,
-  title        = {Online amnesic approximation of streaming time series},
-  author       = {Palpanas, Themistoklis and Vlachos, Michail and Keogh, Eamonn and Gunopulos, Dimitrios and Truppel, Wagner},
-  booktitle    = {Proceedings. 20th International Conference on Data Engineering},
-  pages        = {339--349},
-  year         = {2004},
-  organization = {IEEE}
-}
-@article{palpanas2008streaming,
-  title     = {Streaming time series summarization using user-defined amnesic functions},
-  author    = {Palpanas, Themis and Vlachos, Michail and Keogh, Eamonn and Gunopulos, Dimitrios},
-  journal   = {IEEE Transactions on Knowledge and Data Engineering},
-  volume    = {20},
-  number    = {7},
-  pages     = {992--1006},
-  year      = {2008},
-  publisher = {IEEE}
-}
-@inproceedings{aggarwal2003framework,
-  title        = {A framework for clustering evolving data streams},
-  author       = {Aggarwal, Charu C and Philip, S Yu and Han, Jiawei and Wang, Jianyong},
-  booktitle    = {Proceedings 2003 VLDB conference},
-  pages        = {81--92},
-  year         = {2003},
-  organization = {Elsevier}
-}
-
+Looser relations include work on ``amnesic approximation'' a generalized scheme to incrementally down sample a data stream pursuant to a user-defined elapsed-time-to-value function.
 
 \subsubsection{Applications of Streaming Curation}
 
