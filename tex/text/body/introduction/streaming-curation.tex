@@ -1,11 +1,11 @@
-\subsection{Stream Curation}
+\subsection{Stream Curation} \label{sec:streaming-curation}
 
 Under an iterative model, time operates something like a first-in, nothing-out queue --- successive time steps simply pile on ad infinitum.
 As time accumulates, an elapsed time step recedes ever deeper.
 A discrete event's time point does not change, but its relation to the present does.  % cite xckd 1477?
 This inevitability is crux to the stream curation problem, which we establish to describe rolling maintenance of a temporally representative cross-section of sequenced observations.
 For the sake of generality, we employ this framing to discuss stratum retention strategies for hereditary stratigraphy.
-Streaming curation relates directly to the concept of binning in data streams, which we discuss further below.
+stream curation relates directly to the concept of binning in data streams, which we discuss further below.
 
 Stream curation algorithms must answer how many observations should be kept at any point in time, but also how retained observations should be spaced out over past time.
 Appropriate choices vary by use case, and no stream curation policy can meet requirements of all use cases.
@@ -40,7 +40,7 @@ In those cases, cohorts of retained strata must, in dwindling, gracefully morph 
 
 \subsubsection{Stream Curation Policy Algorithms}
 
-A streaming curation policy algorithm produces a sequence of observation retention sets, one for each time point.
+A stream curation policy algorithm produces a sequence of observation retention sets, one for each time point.
 First and foremost, each of an algorithm's retention sets should satisfy stipulated requirements on collection size and gap size.
 
 To be viable, each retention set's complement (i.e., discarded observations) must superset the complement of all preceding retention sets.
@@ -79,7 +79,7 @@ We are also not aware of existing equivalents or near-equivalents of presented g
 
 Looser relations include work on ``amnesic approximation'' a generalized scheme to incrementally down sample a data stream pursuant to a user-defined elapsed-time-to-value function.
 
-\subsubsection{Applications of Streaming Curation}
+\subsubsection{Applications of Stream Curation}
 
 The correspondences between stream curation and more general binning on data streams open avenues apply stratum curation policy algorithms in various data stream scenarios.
 

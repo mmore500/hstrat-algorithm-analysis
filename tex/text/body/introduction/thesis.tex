@@ -19,9 +19,9 @@ Comparing two checkpoint records tells the extent of common ancestry between two
 We consider the fingerprint record as a data stream, and apply binning techniques to manage fingerprint accretion, paring down retained fingerprints while maintaining checkpoints spaced across time back to the progenitor artifact.
 In accordance with the technique's geological metaphor, individual fingerprints are referred to as ``strata.''
 
-We describe such rolling subset management as a ``streaming curation'' process on a data stream.
-In the context of hereditary stratigraphy, streaming curation decides how annotation size scales with generations elapsed by dictating how many retained strata accumulate.
-Streaming curation also governs inference of artifact ancestry by deciding the subset of historical time points where lineage divergence can be discerned.
+We describe such rolling subset management as a ``stream curation'' process on a data stream.
+In the context of hereditary stratigraphy, stream curation decides how annotation size scales with generations elapsed by dictating how many retained strata accumulate.
+Stream curation also governs inference of artifact ancestry by deciding the subset of historical time points where lineage divergence can be discerned.
 Requirements on space usage and inferential power differ substantially between use cases, making flexible support for a variety of size/power trade-offs crucial.
 
 Hereditary stratigraphy's tractability hinges on compact representation of binned stream records.
@@ -35,4 +35,4 @@ These schemes support linear, logarithmic, and constant scaling relationships be
 Finally, we explain an efficient procedure to integrate an ancestry tree (i.e., a phylogeny) for large collections of annotated artifacts.
 These contributions lay algorithmic foundations for decentralized provenance tracking, but also pertain more broadly to data stream processing.
 
-The next sections recap the principles and applications of hereditary stratigraphy, considerations in applying streaming curation to stratum retention in hereditary stratigraphy, and then situate streaming curation procedures within existing data stream literature and consider applications in data loggers and sensor networks.
+The next sections recap the principles and applications of hereditary stratigraphy, considerations in applying stream curation to stratum retention in hereditary stratigraphy, and then situate stream curation procedures within existing data stream literature and consider applications in data loggers and sensor networks.

@@ -8,7 +8,7 @@ Here, we contrast direct ancestry tracking with distributed ancestry tracking, o
 \subsubsection{Direct Ancestry Tracking}
 
 Most work analyzing ancestry trees of digital artifacts applies centralized lineage tracking \citep{friggeri2014rumor,cohen1987computer,dolson2023phylotrackpy}.%
-\footnote{A notable exception, Libennowell et al. exploit a serendipitous mechanism to reconstruct global dissemination of chain emails --- discussed further below.}
+\footnote{A notable exception, \cite{libennowell2008tracing} exploit a serendipitous mechanism to reconstruct global dissemination of chain emails --- discussed further below.}
 Direct approaches to tracking replicator provenance in digital systems represent this graph structure explicitly, distilling it from the full set of parent-child relationships over the history of a population.
 This yields an exact historical account.
 
@@ -50,7 +50,7 @@ This pruning, however, introduces uncertainty to inference of ancestry.
 The last generation of common ancestry between two lineages can be resolved no finer than the time points associated with retained strata.
 In the context of hereditary stratigraphy, we refer to rules for downsampling as a ``stratum retention'' algorithm.
 Stratum retention must decide how many records to discard, but also how remaining records distribute over past time.
-Discussion considers tuning stratum retention trade-offs elsewhere as an instance of the more general ``stream curation'' problem --- introduced separately below in Section \ref{sec:streaming-curation} and presented in detail in Section \ref{sec:annotation-algorithms}:
+Discussion considers tuning stratum retention trade-offs elsewhere as an instance of the more general ``stream curation'' problem --- separately    introduced below in Section \ref{sec:streaming-curation} and fully presented in Section \ref{sec:annotation-algorithms}:
 
 Procedures for tree synthesis from a population of stratigraph annotations follow from the same principle as pairwise annotation comparison, but requires some further elaboration.
 Section \ref{sec:reconstruction-algorithm} provides a trie-based algorithm for this task.
@@ -79,7 +79,7 @@ Indeed, some research has reported on the routes through which digital image mis
 Such studies generally rely on centralized tracking, which is not possible in many circumstances.
 
 Where possible, decentralized copy tracking has proven an informative asset.
-Work by Libennowell et al. on chain email serves as a notable, and rare, example.
+Work by \cite{libennowell2008tracing} on chain email serves as a notable, and rare, example.
 These researchers applied \textit{post-hoc} methods to reconstruct estimated phylogenies of the propagation of two chain mail messages.
 These phylogenies then served as a reference to tune agent-based models, ultimately yielding a remarkable elucidation of email user behavior and underlying social dynamics.
 Interestingly, this study's reconstructions were solely enabled by a special peculiarity of the two sampled messages: they were email petitions.

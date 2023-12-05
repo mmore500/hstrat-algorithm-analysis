@@ -13,10 +13,10 @@ These sequences have a new randomly-generated differentia appended each generati
 Independent lineages accrue probabilistically-distinct differentia.
 Relatedness estimation between annotations derives from a simple principle: mismatching differentia values at a time point indicates divergence of any two annotations' lineages.
 
-Assuming both annotations employed the same streaming curation policy algorithm, if they share identical record depth they will have retained strata from identical time points.
+Assuming both annotations employed the same stream curation policy algorithm, if they share identical record depth they will have retained strata from identical time points.
 What if one annotation has greater record depth (i.e., more generations elapsed) than the other?
 We can truncate any strata beyond the depth of the younger annotation --- we already know no common ancestry will be shared at those time points.
-Due to the self-consistency requirements of streaming curation, the younger annotation's curated time points will now superset those of the older annotation.
+Due to the self-consistency requirements of stream curation, the younger annotation's curated time points will now superset those of the older annotation.
 (During its excess stratum accumulation, the older annotation may have discarded some time points.)
 So, we will search for the first mismatching stratum among the deeper annotation's early time points.
 
@@ -69,7 +69,7 @@ This bias can be counteracted by splitting polytomies into arbitrary bifurcation
 Allowing for uneven record depth among annotations complicates trie-based reconstruction.
 As described in Section \ref{sec:pairwise-relatedness}, time points retained within deeper annotations effectively subset time points within younger annotations.
 So, arranging youngest-first insertion order for trie construction ensures that no insertion retroactively injects a trie node between existing nodes.
-Instead, in oldest-first order, inserted annotations may encounter a trie node with a time point for which they do not have a corresponding retained stratum (i.e., having discarded it under streaming curation).
+Instead, in oldest-first order, inserted annotations may encounter a trie node with a time point for which they do not have a corresponding retained stratum (i.e., having discarded it under stream curation).
 
 This missing information is conceptually equivalent to a query string wildcard position \citep{fukuyama2016partial}.
 Such wildcard queries can require evaluation of many branch paths during insertion, instead of just one.
@@ -77,7 +77,7 @@ An inserted taxon's lineage could proceed along any of the outgoing edges from t
 Among possible paths, the path with the longest successive streak of strata consistent with the inserted annotation is best-evidenced.
 Unfortunately, in the case of multiple wildcard positions, finding the best-evidenced path requires exploring a number of alternate paths potentially exponential with respect to maximum stratum count $c$ (i.e., maximum trie depth).
 Taking the number of possible differentia values $d$ into account as the maximum branching factor, the worst case time complexity devolves to $\mathcal{O}(c d^c n)$ \citep{fukuyama2016partial}.
-Calculation of the average case depends on the streaming curation policy algorithm at play and the underlying phylogenetic structure being reconstructed, which introduces analytical complexity and likely varies significantly between use cases.
+Calculation of the average case depends on the stream curation policy algorithm at play and the underlying phylogenetic structure being reconstructed, which introduces analytical complexity and likely varies significantly between use cases.
 Fortunately, the number of wildcard sites is limited due to: 1) record depth similarity, and 2) the tendency for there to be relatively few deep branches in most phylogenies, due to coalescence \citep{nordborgCoalescentTheory2019, berestyckiRecentProgressCoalescent2009}.
 These factors likely reduce time costs.
 %Limitations in the number of wildcard sites due to record depth similarity and tendency for low branching factor early in underlying phylogenies likely damp time costs.
