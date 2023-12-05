@@ -65,19 +65,19 @@ More recent work has explored devices tucked within the form factor of dandelion
 The chipset is yet more austere, provisioning 2 kilobytes of volatile flash memory --- and a mere 128 bytes of retentive memory \citep{microchip2014atiny20}.
 As engineers continue to plumb the extremities of technical feasibility, bare-bones computing modalities will persist, and applications in wireless sensor networks will necessitate lightweight data stream algorithms.
 
-\subsubsection{Existing Work}
+\subsubsection{Existing Work Related to Stream Curation}
 
 Stream curation relates to existing binning procedures that group together and consolidate contiguous subsections of a data stream.
 
 The fixed-resolution policy algorithm presented here is simple downsampling via decimation \citep[p. 31]{crochiere1983multirate}
 Our depth-proportional resolution (Section \ref{sec:depth-proportional-resolution-algo}) and recency-proportional resolution (Section \ref{sec:recency-proportional-resolution-algo}) algorithms share close structural similarity with the online equi-segmented and vari-segmented schemes proposed in
 \citep{zhao2005generalized}.
-The depth-proportional resolution structure additionally appears as``pyramidal'' and ``tilted'' time window schemes \citep{aggarwal2003framework,han2005stream}.
+The depth-proportional resolution structure additionally appears as ``pyramidal'' and ``tilted'' time window schemes \citep{aggarwal2003framework,han2005stream}.
 However, provided implementations all unfold through stateful iteration, with representational overhead for each stored value (viz. segment length values).
 To our knowledge, stateless enumerations of retained set composition are original to this work.
 We are also not aware of existing equivalents or near-equivalents of presented geometric sequence $n$th root or curbed recency-proportional resolution policy algorithms (Sections \ref{sec:geom-seq-nth-root-algo} and \ref{sec:curbed-recency-proportional-resolution-algo}).
 
-Looser relations include work on ``amnesic approximation'' a generalized scheme to incrementally down sample a data stream pursuant to a user-defined elapsed-time-to-value function.
+Looser relations include work on ``amnesic approximation'' a generalized scheme to incrementally down sample a data stream pursuant to a user-defined time-back-to-value function.
 
 \subsubsection{Applications of Stream Curation}
 
