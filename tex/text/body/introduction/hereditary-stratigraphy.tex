@@ -1,97 +1,104 @@
 \subsection{Hereditary Stratigraphy} \label{sec:hereditary-stratigraphy}
 
 Digital systems excel at copying and distributing information \citep{miller2001taking}.
-Provenance among copies of digital artifacts can be represented as a tree of parent-child relationships.
-The structure of digital ancestry trees can elucidate topics of significant scientific and societal interest, including cybersecurity, misinformation, and cultural preferences \citep{aslan2020comprehensive,dupuis2019spread,ling2021dissecting}.
-Here, we contrast direct ancestry tracking with distributed ancestry tracking, outline hereditary stratigraphy methodology for distributed ancestry tracking, and review applications of distributed ancestry tracking.
+Provenance among digital artifacts produced through copy operations can be represented as a tree of parent-child relationships (in this case, original-copy relationships).
+The structure of digital ancestry trees can answer important questions pertinent to cybersecurity, misinformation, and cultural anthropology \citep{aslan2020comprehensive,dupuis2019spread,ling2021dissecting}.
+To explain how and why such ancestry analysis might be accomplished, we next contrast direct ancestry tracking with distributed ancestry tracking, outline hereditary stratigraphy methodology for distributed ancestry tracking, and review applications of distributed ancestry tracking.
 
 \subsubsection{Direct Ancestry Tracking}
 
-Most work analyzing ancestry trees of digital artifacts applies centralized lineage tracking \citep{friggeri2014rumor,cohen1987computer,dolson2023phylotrackpy}.%
-\footnote{A notable exception, \cite{libennowell2008tracing} exploit a serendipitous mechanism to reconstruct global dissemination of chain emails --- discussed further below.}
-Direct approaches to tracking replicator provenance in digital systems represent this graph structure explicitly, distilling it from the full set of parent-child relationships over the history of a population.
-This yields an exact historical account.
+Most w ancestry trees of digital artifacts relies on centralized lineage tracking \citep{friggeri2014rumor,cohen1987computer,dolson2023phylotrackpy}.%
+\footnote{A notable exception, \cite{libennowell2008tracing} exploit a serendipitous mechanistic opportunity to reconstruct global dissemination of chain emails --- discussed further below.}
+Direct approaches to tracking replicator provenance in digital systems operate on this graph structure directly, distilling it from the full set of parent-child relationships over the history of a population to yields an exact historical account.
 
 Unfortunately, typical lineage tracking is difficult to scale.
-At scale, practical limitations preclude complete, permanent records of replication events --- which accumulate linearly with elapsed generations \citep{dolson2023algorithms}.
-So, extinct lineages are pruned.
-Extinction detection requires either (1) collation of all replication and destruction events at a centralized data store or (2) peer-to-peer transmission of extinction notifications that unwind a lineage's (possibly many-hop) trajectory across host nodes.
-Both approaches oblige runtime communication overhead.
-Further, under the perfect-tracking paradigm single missing relationships can entirely disjoin knowledge of how large portions of phylogenetic history relate.
-This makes direct lineage tracking highly sensitive to data loss and dynamic network topology rearrangements --- key considerations at scale \citep{cappello2014toward,ackley2011pursue}.
+At scale, practical limitations preclude comprehensive records of replication events, which accumulate linearly with elapsed generations \citep{dolson2023algorithms}.
+So, extinct lineages must be pruned.
+Detecting lineage extinctions requires either (1) collation of all replication and destruction events to a centralized data store or (2) peer-to-peer transmission of extinction notifications that unwind a lineage's (possibly many-hop) trajectory across host nodes.
+Both options oblige runtime communication overhead.
+To boot, the perfect-tracking paradigm is fragile to single missing relationships --- these can entirely disjoin knowledge of how large portions of phylogenetic history relate.
+This fragility makes direct lineage tracking highly sensitive to data loss and dynamic network topology rearrangements, which are ubiquitous at scale \citep{cappello2014toward,ackley2011pursue}.
 
 \subsubsection{Motivation for Decentralized Ancestry Tracking}
 
-Under an alternate framing, phylogenetic biology almost certainly constitutes the single most extensive investigation of artifact provenance ever conducted.
-Biological phylogenetics pursues a vast campaign to stitch together millions of lines of descent by analysis of fossil records, phenotypic traits, and --- particularly --- genetic information \citep{hinchliff2015synthesis,lee2015morphological}.
-Successes with natural systems, resoundingly evidence viability of robust phylogenetic analyses over fully-distributed processes.
+Under an alternate framing, biological phylogenetics almost certainly constitutes the single most extensive investigation of artifact provenance ever conducted.
+Decades of phylogenetics researchers have waged a vast and sophisticated campaign to stitch together millions of lines of descent via analysis of fossil records, phenotypic traits, and --- especially --- genetic information \citep{hinchliff2015synthesis,lee2015morphological}.
+The successes of biological phylogenetics resoundingly demonstrate the viability of robust phylogenetic analyses over large, long-running, and fully-distributed systems.
 
-Inspired by systematic biology, we can consider post-hoc inference from heritable data as an alternative to direct tracking.
+Inspired by systematic biology, we can consider post hoc inference from heritable data as an alternative to direct tracking.
 At core, biological processes of mutation, recombination, conjugation, transformation, transduction, and gene transfer induce patterns of (sufficiently nonvolatile) variation that can be mined to reveal historical relationships \citep{davis1992populations}.
 
-Indeed, digital systems with imperfect copy processes (e.g., digital evolution), phylogenetic reconstructions can be accomplished solely from pre-existing, functional digital genome contents \citep{moreno2021case}.
-However, such algorithms are highly dependent on representational and mutational specifics of individual simulation systems and do not readily generalize across diverse digital evolution systems.
-Also, they suffer from many of the complications that plague phylogenetic analyses of biological systems.
-And in systems without mutational dynamics (i.e., perfect copies), this is not possible.
+Indeed, in digital systems with imperfect copy processes (e.g., digital evolution), phylogenetic reconstructions can be accomplished ad hoc, i.e., directly from copy artifacts themselves \citep{moreno2021case}.
+However, this approach has major drawbacks ---
+(1) ad hoc reconstruction algorithms are highly dependent on representational specifics so do not readily generalize;
+(2) ad hoc approaches suffer from many of the complications that plague phylogenetic analyses of biological systems such as back mutation and mutational saturation;
+(3) systems without mutational dynamics (i.e., perfect copies) entirely lack information on heredity.
 
-An intriguing proposition presents itself: how might a genetic representation be designed to maximize ease and efficacy of phylogenetic reconstruction?
-If sufficiently compact, such a representation could be attached as an (entirely ornamental) annotation to facilitate phylogenetic inference over genomes of interest.
-This line of reasoning led to the recent development of ``hereditary stratigraphy'' methodology, which associates digital artifacts with heritable annotations specially designed to provide universal system-invariant phylogenetic reconstruction with well-defined, tunable expectations for inference accuracy \citep{moreno2022hereditary}.
+The challenges associated with ad hoc ancestry estimation begs the question of how to design genetic material to optimize phylogenetic reconstruction.
+If sufficiently compact, such a representation could be annotated onto artifacts of interest in order to facilitate phylogenetic inference.
+This scheme assigns each artifact an annotation, with parents' annotations passed down to offspring artifact copies.
+
+The recently developed ``hereditary stratigraphy'' methodology implements this approach, providing a design for heritable annotations that facilitate universal system-invariant phylogenetic reconstruction with well-defined, tunable expectations for inference accuracy \citep{moreno2022hereditary}.
 
 \subsubsection{Mechanisms for Decentralized Ancestry Tracking}
 
-The core mechanism of hereditary stratigraphy is creation, and subsequent inheritance, of a new randomized data packet each generation.
-These stochastic fingerprints, which we call ``differentia,'' serve as a sort of checkpoint for lineage identity at a particular generation, providing for straightforward inference of lineage histories.
+The core mechanism of hereditary stratigraphy is accretion, and subsequent inheritance, of a new randomized data packet each copy generation.
+These stochastic fingerprints, which we call ``differentia,'' serve as a sort of checkpoint for lineage identity at a particular generation.
 At future time points, extant annotations will share identical differentia for the generations they experienced shared ancestry.
-So, the first mismatched fingerprint between two annotations bounds the extent of common ancestry.
+So, the first mismatched fingerprint between two annotations bounds their common ancestry.
 
-To prevent bloat of annotation size in direct proportion to generations elapsed, hereditary stratigraphy prescribes a ``pruning'' process to discard   differentia on the fly as generations elapse.
-This pruning, however, introduces uncertainty to inference of ancestry.
-The last generation of common ancestry between two lineages can be resolved no finer than the time points associated with retained strata.
-In the context of hereditary stratigraphy, we refer to rules for downsampling as a ``stratum retention'' algorithm.
-Stratum retention must decide how many records to discard, but also how remaining records distribute over past time.
-Discussion considers tuning stratum retention trade-offs elsewhere as an instance of the more general ``stream curation'' problem --- separately    introduced below in Section \ref{sec:streaming-curation} and fully presented in Section \ref{sec:annotation-algorithms}:
+To circumvent annotation size bloat, hereditary stratigraphy prescribes a ``pruning'' process to delete differentia on the fly as generations elapse.
+This pruning, however, comes at a cost to inference power.
+The last generation of common ancestry between two lineages can be resolved no finer than retained checkpoint times.
+In the context of hereditary stratigraphy, we refer to the procedure for down sampling as a ``stratum retention algorithm'' and the resulting patterns of retained differentia as a ``stratum retention policy.''
+Stratum retention algorithms must decide how many records to discard, but also how remaining records distribute over past time.
+Discussion considers tuning stratum retention trade-offs elsewhere as an instance of the more general ``stream curation'' problem --- introduced separately below in Section \ref{sec:streaming-curation} and fully presented in Section \ref{sec:annotation-algorithms}:
 
-Procedures for tree synthesis from a population of stratigraph annotations follow from the same principle as pairwise annotation comparison, but requires some further elaboration.
+Procedures for ancestry tree reconstruction from a population of stratigraph annotations follow from the same principle as pairwise annotation comparison, but merit some further elaboration.
 Section \ref{sec:reconstruction-algorithm} provides a trie-based algorithm for this task.
 
 \subsubsection{Distributed Ancestry Trees in Digital Evolution}
 
-Digital evolution refers to algorithms that combine replication, mutation, and selection to instantiate an evolutionary process.
+Digital evolution refers to computational systems that combine replication, mutation, and selection to instantiate an evolutionary process.
 The field sits at the intersection of evolutionary biology, viz. simulation experiments, and machine learning, viz. heuristic optimization.
-Within digital evolution, complications of distributed tracking have historically restricted most phylogenetic analyses to single-process or centralized leader/follower simulations; this lacking motivated original development of hereditary stratigraphy.
+Within digital evolution, complications of distributed tracking have historically restricted most phylogenetic analyses to single-process or centralized leader/follower simulations.
+Need for phylogenetic methods compatible with parallel and distributed simulation motivated original development of hereditary stratigraphy \citep{moreno2022hereditary}.
 
-Computational scale greatly impacts digital evolution and, more broadly, artificial life \citep{ackley2014indefinitely} --- particularly with respect to open-ended evolution, the question of how (and if) closed systems can indefinitely yield new complexity, novelty, and adaptation --- is inexorably intertwined with computational scale, and has been implicated as meaningfully compute-constrained in at least some systems \citep{taylor2016open,channon2019maximum}.
-It is not an unreasonable possibility that orders-of-magnitude changes in computational scale of digital evolution could induce qualitative improvements \citep{moreno2022engineering}, analogously to the renaissance of deep learning with the advent of GPGPU computing \citep{krizhevsky2012imagenet}.
+Computational scale matters in digital evolution and, more broadly, artificial life \citep{ackley2014indefinitely} --- particularly with respect to open-ended evolution (OEE), the question of how (and if) closed systems can indefinitely grow in complexity, novelty, and adaptation \citep{taylor2016open}.
+OEE is inexorably intertwined with computational scale, and has been implicated as meaningfully compute-constrained in at least some systems \citep{channon2019maximum}.
+It is not an unreasonable possibility that orders-of-magnitude changes in computational scale of digital evolution could induce qualitative effects \citep{moreno2022engineering}, analogously to the renaissance of deep learning with the advent of GPGPU computing \citep{krizhevsky2012imagenet}.
 
 % ELD: TODO: consider cutting this paragraph
-Indeed, digital evolution work commonly marshals substantial parallel and distributed computing, already  --- in some cases reaching petaflop scale \citep{gilbert2015artificial}.
+Indeed, digital evolution work already commonly marshals substantial parallel and distributed computing  --- in some cases reaching petaflop scale \citep{gilbert2015artificial}.
 Methods range from entirely independent evolutionary replicates across compute jobs \citep{dolson2017spatial, hornby2006automated}, to data-parallel fitness evaluation of single individuals over independent test cases using hardware accelerators \citep{harding2007fast_springer, langdon2019continuous}, to application of primary-subordinate/controller-responder parallelism to delegate costly fitness evaluations of single individuals \citep{cantu2001master,miikkulainen2019evolving}.
 
-Fully decentralized, highly-distributed approaches include as island models \citep{bennett1999building,schulte2010genetic} and mesh-computing approaches prioritizing dynamic interactions \citep{ray1995proposal,ackley2018digital,moreno2021conduit} have also been explored.
-However, a major barrier to effective applications of the fully-distributed paradigm has been difficulty of observing system state --- including phylogenetic history, which can provide valuable insight into the mode and tempo of evolution \citep{dolson2020interpreting}.
-In the absence of a global population-level view, the course of evolution becomes much more challenging to study --- undercutting applications of these systems as an experimental platform.
+Fully decentralized, highly-distributed computation is also applied, such as island models \citep{bennett1999building,schulte2010genetic} and mesh-computing approaches \citep{ackley2018digital,moreno2021conduit}.
+However, a major barrier to effective applications of the fully-distributed paradigm has been difficulty of observing system state at scale.
+In the absence of a global population-level view, the course of evolution becomes much more challenging to study --- undercutting applications of large-scale evolutionary simulation systems as an experimental platform.
+Among other instrumentations, including phylogenetic information can help boost observability by providing insight into the mode and tempo of evolution \citep{dolson2020interpreting}.
 
 \subsubsection{Further Applications of Distributed Ancestry Trees}
 
 Replication of digital artifacts pervades computing, and interest in understanding structure of copy trees extends far beyond digital evolution.
-Indeed, some research has reported on the routes through which digital image misinformation and computer viruses spread \citep{friggeri2014rumor,cohen1987computer}.
-Such studies generally rely on centralized tracking, which is not possible in many circumstances.
+Classic examples include the branching reported on the routes through which digital misinformation and computer viruses propagate \citep{friggeri2014rumor,cohen1987computer}.
+Studies in this realm have generally relied on centralized tracking, leaving
+circumstances where this is not feasible largely underexplored.
 
-Where possible, decentralized copy tracking has proven an informative asset.
-Work by \cite{libennowell2008tracing} on chain email serves as a notable, and rare, example.
-These researchers applied \textit{post-hoc} methods to reconstruct estimated phylogenies of the propagation of two chain mail messages.
+Where it has been performed, decentralized copy tracking has proven quite informative.
+Work by \cite{libennowell2008tracing} on chain email provides a rare example.
+These researchers applied post hoc methods to estimate phylogenies of chain mail messages.
 These phylogenies then served as a reference to tune agent-based models, ultimately yielding a remarkable elucidation of email user behavior and underlying social dynamics.
-Interestingly, this study's reconstructions were solely enabled by a special peculiarity of the two sampled messages: they were email petitions.
-Thus, users would append their name to the list before forwarding it on --- a mechanism strikingly similar In broad strokes to hereditary stratigraphy.
-(Loose parallels between hereditary stratigraphy and visual sedimentation, a dynamic graphic representation that draws on a geological metaphor to visualize data streams by progressively stacking, compressing, and then fusing data point objects with age, also bears mention \citep{huron2013visual}).
+Interestingly, this study's reconstructions were solely enabled by a special peculiarity of the sampled messages: they were email petitions.
+Thus, users would append their name to the list before forwarding it on --- a mechanism similar in broad strokes to hereditary stratigraphy.
 
-Hereditary stratigraphic techniques make possible new visibility into hereto cloistered processes through which digital artifacts spread.
-Take, for example, peer-to-peer and federated social network, which have recently enjoyed substantial upticks in popularity \citep{la2021understanding}.
+As an aside, loose parallels between hereditary stratigraphy and visual sedimentation, a dynamic graphic representation that draws on a similar geological metaphor to visualize data streams by progressively stacking, compressing, and then fusing visualized data objects with age, also bear mention \citep{huron2013visual}.
+
+Hereditary stratigraphic techniques enabled new possibilities to delve into hereto cloistered processes through which digital artifacts spread.
+Peer-to-peer and federated social networks, which have recently enjoyed substantial upticks in popularity \citep{la2021understanding}, make a prime example.
 Within social networks, the structure of share chains is key to understanding, detecting, and mitigating misinformation \citep{kucharski2016study,raponi2022fake} and predatory viral marketing (e.g., spamming and phishing attacks) \citep{guidi2018managing}.
-However, existing work on share chain structure typically relies on the capacity for direct ancestry tracking afforded by monolithic platforms (e.g., Facebook, Twitter, etc.).
+However, existing work relies on the capacity for direct ancestry tracking afforded by monolithic platforms (e.g., Facebook, Twitter, etc.).
 Hereditary stratigraphy could enable robust, semi-anonymized extraction of share chain diagnostics within decentralized social networks.
 
 Substantial limitations on uses cases for hereditary stratigraphy should be noted, however.
-Data collection predicates influence over the artifact copy process, necessary to ensure performance of stratigraph annotation updates.
-Additionally, the methodology is susceptible to defacement of annotation data by antagonistic actors.
+Annotations predicate influence over the artifact copy process necessary to ensure generational updates.
+Additionally, the methodology is susceptible to removal or spoofing of annotation data by antagonistic actors.

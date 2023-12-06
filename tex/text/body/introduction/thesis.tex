@@ -1,6 +1,6 @@
-Absent indefinitely provisioned storage capacity, at some point data eviction or digestion becomes necessary to continue processing inputs \citep{gaber2005mining}.
-This constraint is core to algorithm design for data streams, scenarios involving read-once inputs available in a strictly determinate sequence.
-In data streams, ordering may be dictated by inherently real-time processes (e.g., sensor readings) or retrieval limitations of storage media (e.g., a tape archive) \citep{henzinger1998computing}.
+Absent indefinitely provisioned storage capacity, eviction or digestion eventually becomes necessary to continue processing inputs \citep{gaber2005mining}.
+This constraint is crux to algorithm design for data streams, scenarios involving read-once inputs available in a strictly determinate sequence.
+Data stream ordering may be dictated by inherently real-time processes (e.g., sensor readings) or retrieval limitations of storage media (e.g., a tape archive) \citep{henzinger1998computing}.
 The data streaming model assumes input greatly exceeds memory capacity, with many analyses simply treating streams as unbounded \citep{jiang2006research}.
 
 Data streaming scenarios pervade domain contexts across science and industry \citep{aggarwal2009data,akidau2015dataflow}.
@@ -8,31 +8,34 @@ Commercial application areas include sensor networks \citep{elnahrawy2003researc
 Notable scientific applications arise in environmental/climate monitoring \citep{hill2009real} and astronomy \citep{graham2012data}.
 Purely-programmatic computation can also behave as a data stream --- iterative simulation processes traverse vast expanses of ephemeral intermediate state that must be traced to verify simulation dynamics and assess simulation outcomes \citep{abdulla2004simulation,schutzel2014stream}.
 
-Indeed, this broad utility has mustered an extensive corpus of algorithms that sip from data streams.
-Typical objectives include running summary statistics calculations \citep{lin2004continuously}, on-the-fly data clustering \citep{silva2013data}, live anomaly detection \citep{cai2004maids}, and rolling event frequency estimation \citep{manku2002approximate}.
-Across data stream algorithms, approaches typically draw on three key stratagems to solve the mismatch between data volume and working storage capacity: (1) rolling mechanisms, which restrict consideration to a FIFO tranche of recent data, (2) accumulation, which successively folds data into a summary statistic (e.g., sum, count, etc.) where data is repeatedly applied to a fixed amount of memory or resources, and (3) binning, which consolidates data within time intervals spaced across a stream's history to create a coarsened record.
+Indeed, this broad utility has unleashed an extensive corpus of data stream algorithms.
+Common objectives include moving summary statistics calculations \citep{lin2004continuously}, on-the-fly data clustering \citep{silva2013data}, live anomaly detection \citep{cai2004maids}, and rolling event frequency estimation \citep{manku2002approximate}.
+Across data stream algorithms, approaches typically draw on three key stratagems: (1) rolling mechanisms, which restrict consideration to a FIFO tranche of recent data, (2) accumulation, which successively folds data into a summary statistic (e.g., sum, count, etc.) where data is repeatedly applied to a fixed amount of memory or resources, and (3) binning, which consolidates data within time intervals spaced across a stream's history to create a coarsened record.
 
-Here, we focus on the third stratagem, binning, and apply it to distributed provenance tracking for replicating digital artifacts using a technique we call ``hereditary stratigraphy.''
-Our motivating application for tracking copy trees is phylogenetic analysis of genetic algorithms and evolutionary simulations, but other areas of interest include decentralized social network content, distributed systems messaging, peer-to-peer file sharing, and computer viruses.
+Here, we focus on applications of the third stratagem, binning, to distributed provenance tracking for replicating digital artifacts.
+We call this technique ``hereditary stratigraphy.''
+
+Our motivating application for tracking copy trees is phylogenetic analysis of genetic algorithms and evolutionary simulations, but other areas of interest include decentralized social network content, messaging in distributed systems, peer-to-peer file sharing, and computer viruses.
 In order to reconstruct histories of relatedness, we annotate replicating artifacts with a record of checkpoint fingerprints that grows by accretion with each replication event.
-Comparing two checkpoint records tells the extent of common ancestry between two artifacts, which will share common fingerprints up through their last common ancestor and then differ.
+Comparing two checkpoint records tells the extent of common ancestry.
+Annotations will share common fingerprints up through the time of their last common ancestor and then differ.
+
 We consider the fingerprint record as a data stream, and apply binning techniques to manage fingerprint accretion, paring down retained fingerprints while maintaining checkpoints spaced across time back to the progenitor artifact.
-In accordance with the technique's geological metaphor, individual fingerprints are referred to as ``strata.''
+In accordance with the hereditary stratigraphy's geological metaphor, individual fingerprints are referred to as ``strata.''
 
-We describe such rolling subset management as a ``stream curation'' process on a data stream.
-In the context of hereditary stratigraphy, stream curation decides how annotation size scales with generations elapsed by dictating how many retained strata accumulate.
-Stream curation also governs inference of artifact ancestry by deciding the subset of historical time points where lineage divergence can be discerned.
-Requirements on space usage and inferential power differ substantially between use cases, making flexible support for a variety of size/power trade-offs crucial.
+We term rolling subset management as a ``stream curation'' process on a data stream.
+In the context of hereditary stratigraphy, stream curation decides how annotation size scales with generations elapsed by controlling how many retained strata accumulate.
+Stream curation influences ancestry inference because the onset of lineage divergence can only be discerned where fingerprints are retained.
+Requirements on space usage and inferential power will differ substantially between use cases, so flexible support for a variety of size/power trade-offs is crucial.
 
-Hereditary stratigraphy's tractability hinges on compact representation of binned stream records.
-For some use cases, annotated artifacts will number millions or higher.
-Thus, annotation inefficiency may substantially burden memory, storage, and network bandwidth (i.e., serialized artifact-annotation exchange).
-Because reduced fingerprint size boosts capacity for temporal density of retained fingerprints, typical use will take fingerprints as individual bits, or possibly bytes to avoid addressability complications.
+Practical application of hereditary stratigraphy requires compact representation of binned stream records.
+For some use cases, annotated artifacts will number millions or higher, so annotation inefficiency may substantially burden memory, storage, and network bandwidth (i.e., serialized artifact-annotation exchange).
+Because reduced fingerprint size allows more fingerprints to be retained, typical use will take fingerprints as individual bits, or possibly bytes (to avoid addressability complications).
 In this context, representational overhead incurred, e.g., by explicitly storing fingerprints' individual stream sequence indices, can easily bloat annotations' footprint severalfold.
 
 Here, we present a suite of indexing schemes that reduce representational overhead for fingerprint records to a single generation-count value.
-These schemes support linear, logarithmic, and constant scaling relationships between record size and generations elapsed and both even-time and recency-biased distributions of retained fingerprints.
-Finally, we explain an efficient procedure to integrate an ancestry tree (i.e., a phylogeny) for large collections of annotated artifacts.
-These contributions lay algorithmic foundations for decentralized provenance tracking, but also pertain more broadly to data stream processing.
+These schemes support (1) linear, logarithmic, and constant scaling relationships between record size and generations elapsed and (2) both even-time and recency-biased distributions of retained fingerprints.
+Finally, we provide an efficient procedure to integrate an ancestry tree (i.e., a phylogeny) for large collections of annotated artifacts.
+These contributions lay algorithmic foundations for decentralized provenance tracking, but stream curation algorithms also pertain more broadly to data stream processing.
 
-The next sections recap the principles and applications of hereditary stratigraphy, considerations in applying stream curation to stratum retention in hereditary stratigraphy, and then situate stream curation procedures within existing data stream literature and consider applications in data loggers and sensor networks.
+To provide further introduction to key concepts behind this work, the next sections recap the principles and applications of hereditary stratigraphy, discuss considerations in applying stream curation to stratum retention in hereditary stratigraphy, and then situate stream curation procedures within existing data stream literature and consider applications of stream curation data loggers and sensor networks.
