@@ -17,4 +17,10 @@ find . -type f | grep -P '[^a-zA-Z0-9_+.,=/-]+' | xargs rm -rf
 find . -name '.*' -not -name '.' -not -name '..' -exec rm {} \;
 
 rm -f arxiv.tar.gz
+make cleaner
+make
+make clean
+mv bibl.bib main.bib
+cp bu1.bbl main.bbl
+cp bu1.blg main.blg
 tar -czvf arxiv.tar.gz *
