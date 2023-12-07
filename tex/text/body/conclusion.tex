@@ -1,35 +1,24 @@
 \section{Conclusion} \label{sec:conclusion}
 
-We have documented the algorithmic backing of the emerging ``hereditary stratigraphy'' methodology for distributed lineage tracking of replicating digital artifacts.
-This method works by annotating replicating entities with a heritable annotation, and then comparing end-state annotations after the fact to estimate their phylogenetic relationships --- akin to how biologists infer phylogenetic relationships from biological sequences.
-We have shown the underlying mechanism of hereditary stratigraphy to be an instance of a more general ``stream curation'' problem.
-This problem requires online subsampling of a rolling observation stream to balance requirements to maintain information over stream history and to limit the number of retained observations.
-In addition to hereditary stratigraphy, the stream curation problem is faced in use cases involving memory-constrained data logger or wireless sensor network devices.
-We identify five policy algorithms that provide different size/coverage trade-offs for the stream curation problem, and provide procedures to enact them efficiently.
+Hereditary stratigraphy derives its tunability and efficiency from the stream curation algorithms presented in this work.
+These algorithms maintain running archives of stream data, and must decide how many data items should be retained and how retained data items should distribute over past time.
+We provide five policy algorithms that target a spectrum of size/coverage trade-offs and procedures to enact them efficiently.
+Implementations enable key optimizations to trim archive storage size overhead through efficient and computationally reducible (i.e., stateless) determination of retained contents.
 
-We then explore postprocessing algorithms used to compare and interpret hereditary stratigraphic annotations.
-In particular, we sketch a trie-based tree reconstruction algorithm that proceeds from the underlying structure of the hereditary stratigraphy annotation.
-% As a point of comparison, we provide an algorithmic formalization of the established perfect-tracking algorithms currently standard in agent-based evolutionary modeling.
-% We find that both perfect tracking and hereditary stratigraphy have circumstances in which they excel.
-% Hereditary stratigraphy enables tracking in noisy, parallel, and distributed environments where perfect tracking would be impractical.
-% It also makes stronger guarantees about memory use (although on average perfect tracking uses less memory than most hereditary stratigraphy policies).
-% Lastly, it allows different tradeoffs between data resolution, accuracy, and memory use.
-%TODO talk about the take away of comparing the two
-% ELD: Took a stab at it
+The stream curation problem generalizes beyond hereditary stratigraphy, and memory-smart optimizations provided here stand to boost the data stream mining capabilities of low-grade hardware in roles such as sensor nodes and data logging devices.
+Phylogenetic analysis of digital evolution systems provides a cinch application for ancestry trees estimated via hereditary stratigraphy, but other possibilities include tracking message propagation in distributed systems or content propagation in distributed social networks.
+To this end, we report a trie-based algorithm to enable ancestry tree reconstructions comprising large numbers of artifacts.
 
-Much future work remains.
-We are particularly interested in adapting hereditary stratigraphy to even more effectively make use of space in fixed-capacity contexts and minimize rearrangement of strata in the underlying annotation data structure (e.g., array of strata) during the update process.
-One promising direction involves adapting retention policies to directly specify the index positions to replace rather than the deposit times of strata to prune.
-Additionally, more general applications of the stream curation problem would be worth exploring more directly.
-There is also more theoretical analysis to be done.
-Most notably, through the lens of information theory it would be possible to conduct a more formal analysis of the information-retention trade-offs among different policy algorithms. 
-This work would also open the door to a more precise analysis of the relationship between pairwise relatedness estimation accuracy and overall tree reconstruction quality.
-Finally, it would be worth assessing the extent to which curation policy algorithms minimize the number of records necessary to achieve their guarantees.
+Much work remains.
+We are particularly interested in adapting hereditary stratigraphy to improve efficacy of space use, efficiency of the update process, and simplicity of implementation for fixed-space contexts.
+One promising direction involves adapting retention policies to directly specify a buffer index position to replace.
+This would remove complications of shuffling down entries when early buffer entries are removed and, after initial population of the buffer, would ensure completely full space utilization.
 
-Typically, phylogeneticists tailor algorithms to the demands of available data, not the other way around.
-This notion invites deeper consideration of phylogenetic information encoding within genomes.
-For example, it would be interesting to explore upper bounds on phylogenetic reconstruction accuracy given genome length for different generational depths and population sizes.
+Plenty remains for theoretical analysis, as well.
+The extent to which stream curation policy algorithms minimize the number of records necessary to achieve their guarantees should be analyzed.
+With respect to hereditary stratigraphy, information theory based approaches may help understand trade-offs among different policy algorithms as well as whether more efficient algorithms than current hereditary stratigraphy approaches are possible.
+Such work would also open the door to analysis of the relationship between pairwise relatedness estimation accuracy and overall tree reconstruction quality, which could allow policy algorithms to be tuned directly for a particular reconstruction quality target.
 
-Ultimately, our interest in hereditary stratigraphy and stream curation is application-driven.
+Ultimately, however, our interest in hereditary stratigraphy and stream curation is application-driven.
 To these ends, reference implementations of most algorithms described are provided in the public-facing \texttt{hstrat} Python library \citep{moreno2022hstrat}.
-This library makes hereditary stratigraphy and stream curation algorithms available via a few lines of code.
+This library makes hereditary stratigraphy and stream curation algorithm implementations available via a few lines of code.
