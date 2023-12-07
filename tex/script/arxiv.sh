@@ -3,13 +3,18 @@
 set -e
 shopt -s globstar
 
-find {hereditary-stratigraph-concept,hstrat-evolutionary-inference} -type f ! \( -name "*.pdf" -o -name "*.tex" -o -name "*.bib" \) -exec rm -f {} +
+find hereditary-stratigraph-concept -type f ! \( -name "*.pdf" -o -name "*.tex" -o -name "*.bib" \) -exec rm -f {} +
 
 
 find . -type d -name dishtiny -exec rm -rf {} +
 find . -type d -name hstrat -exec rm -rf {} +
 find . -type d -name conduit -exec rm -rf {} +
+find . -type d -name docs -exec rm -rf {} +
 find . -type d -empty -delete
 find . -type l -delete
 
-find . -type f -regextype posix-extended -not -regex "./[a-zA-Z0-9_+.,=-]+(/.*)?" -delete
+find . -type f | grep -P '[^a-zA-Z0-9_+.,=/-]+' | xargs rm -rf
+find . -name '.*' -not -name '.' -not -name '..' -exec rm {} \;
+
+rm -f arxiv.tar.gz
+tar -czvf arxiv.tar.gz *
