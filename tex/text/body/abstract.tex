@@ -2,7 +2,7 @@
 Data stream algorithms tackle operations on high-volume sequences of read-once data items.
 Data stream scenarios include inherently real-time systems like sensor networks and financial markets.
 They also arise in purely-computational scenarios like ordered traversal of big data or long-running iterative simulations.
-In this work, we develop methods to maintain temporally-representative archives of stream data, a task we call ``stream curation.''
+In this work, we develop methods to maintain running archives of stream data that are temporally representative, a task we call ``stream curation.''
 Our approach contributes to rich existing literature on data stream binning, which we extend by providing stateless (i.e., non-iterative) curation schemes that enable key optimizations to trim archive storage overhead and streamline processing of incoming observations.
 We also broaden support to cover new trade-offs between curated archive size and temporal coverage.
 We present a suite of five stream curation algorithms that span $\mathcal{O}(n)$, $\mathcal{O}(\log n)$, and $\mathcal{O}(1)$ orders of growth for retained data items.
