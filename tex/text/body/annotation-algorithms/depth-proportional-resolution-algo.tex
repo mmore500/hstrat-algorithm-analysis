@@ -1,17 +1,18 @@
 \subsection{Depth-Proportional Resolution (DPR) Policy Algorithm}
 \label{sec:depth-proportional-resolution-algo}
 
-The depth-proportional resolution policy algorithm affiliates even coverage over record history and capped extant record size.
-To accomplish this, depth-proportional resolution approximates the cadenced spacing of retained observations at a gap width proportional to record depth.
-An equivalent interpretation of DPR strategy would be interspersal of the historical record with a fixed number of waypoints.
+The depth-proportional resolution policy algorithm provides even coverage over record history and capped extant record size.
+To accomplish these goals, depth-proportional resolution approximates the cadenced spacing of retained observations at a gap width proportional to record depth.
+%An equivalent interpretation of DPR strategy would be interspersal of the historical record with a fixed number of waypoints.
+Alternatively, DPR can be seen as interspersing the historical record with a fixed number of waypoints.
 
 Because observation time points are immutable after the fact, translating this naive DPR plan to a rolling, ``online'' basis necessitates a further consideration.
-To conservatively maintain resolution guarantees, it is acceptable to error on the side of caution by choosing gap sizes smaller than naively supposed.
-This allows a simple trick for policy self-consistency: flooring gap sizes to the next lower power of two.
-Note that, under this scheme, when gap size slackens it will double.
-Note also that multiples of a binary power subsume multiples of higher binary power.
-So observations at slackened-to intervals always remain, having been retained as way points under the phased out gap size.
-As intuition, therefore, the full DPR policy algorithm can be conceived of through a simple principle: successive eliminations of every other retained observation when a capacity threshold is reached.
+To conservatively maintain resolution guarantees, it is acceptable to err on the side of caution by choosing gap sizes smaller than the worst-case requirement.
+This approach allows a simple trick for achieving policy self-consistency: flooring gap sizes to the next lower power of two.
+Under this scheme, gap size will periodically double.
+Beacause multiples of a binary power superset multiples of higher binary power, self-consistency is maintained.
+As intuition, therefore, the full DPR policy algorithm can be conceived of through a simple principle: %successive eliminations of every other retained observation when a capacity threshold is reached.
+each time a capacity threshold is reached, every second observation is eliminated.
 
 Binary floor approximation exhibits another useful property: policy algorithm property distortions can be bounded by a constant.
 With respect to the initial naive supposition, gap width is at most halved.
@@ -20,7 +21,7 @@ We structure parameterization of the DPR policy algorithm to account for divagat
 Policy algorithm behavior proceeds from a specified minimum gap count among retained observations, $r$.
 (Note that $r$ also corresponds to minimum the number of distinguishable granules over record history.)
 An absolute resolution guarantee of at least $n/r$, with $n$ as record depth, follows.
-Further resulting is a constant extant record size order of growth, capped as extant observation count capped at $2r$.
+Thus, DPR has a constant extant record size order of growth, capped as extant observation count of $2r$.
 
 Algorithm \ref{alg:depth-proportional-resolution-algo-enum-retained-ranks} provides enumeration of retained time points under the DPR scheme.
 Although enactment can be parsimoniously formulated as set subtraction between enumerations at successive time points with $\mathcal{O}(1)$ complexity, Algorithm \ref{alg:depth-proportional-resolution-algo-gen-drop-ranks} addends a more expedient approach.
@@ -34,8 +35,9 @@ Many prescriptions for constant space complexity will arise from fixed memory al
 Such reserved memory cannot typically be use for other purposes, so maximization of space usage minimizes waste.
 Occupying only half of bounded capacity clearly comes out on the ``use it or lose it'' downside.
 
-An alternate ``tapered'' variant of the depth-proportional resolution algorithm can be easily defined to remedy this space-usage quirk.
-Instead of all at once, the tapered approach eliminates phased-out observations one by one as new observations accrue.
+An alternate ``tapered'' variant of the depth-proportional resolution algorithm remedies this space-usage quirk.
+%Instead of all at once,
+The tapered approach eliminates phased-out observations one by one as new observations accrue, but otherwise has the same properties as the algorithms described for DPR.
 % Supplementary Section \ref{sec:depth-proportional-resolution-tapered-algo} details this tapered DPR policy algorithm.
 % TODO: ADD SECTION ^^^
 The accompanying \texttt{hstrat} software library implements both variants.

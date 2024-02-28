@@ -4,9 +4,9 @@ Under an iterative model, the passing of time operates something like a ``first-
 As time accumulates, each elapsed time step recedes ever deeper.
 A discrete event's absolute time point does not change, but its relation to the present does.  % cite xckd 1477?
 This inevitability is crux to the ``stream curation'' problem, which we establish to describe rolling maintenance of a temporally representative cross-section of data stream observations.
-For the sake of generality, we frame stratum retention strategies for hereditary stratigraphy in terms of stream curation in this paper.
+% For the sake of generality, we frame stratum retention strategies for hereditary stratigraphy in terms of stream curation in this paper.
 
-Stream curation algorithms must answer how many observations should be kept at any point in time, but also how observations that are retained should space out over past time.
+Stream curation algorithms must answer how many observations should be kept at any point in time, but also how observations that are retained should be spaced out over past time.
 Appropriate choices vary by use case, and no stream curation policy can meet all possible demands.
 For this reason, we consider a spectrum across two factors: size limitation, i.e., how many observations may be retained, and resolution guarantees, i.e., maximum gap sizes.
 For each space-vs-resolution trade-off explored, we provide an implementation algorithm meeting criteria of computational reducibility and self-consistency, defined below.
@@ -14,19 +14,20 @@ We first discuss stratum curation policy trade-off stipulation criteria and poli
 
 \subsubsection{Stream Curation Policy Stipulation}
 
-Two primary dimensions of stream curation policy matter for practical purposes: retained collection size and time gap sizes between retained observations.
+Two primary dimensions of stream curation policy matter for practical purposes: 1) retained collection size and 2) time gap sizes between retained observations.
 
 To specify requirements on retained collection size, we bound retained observation count to a fixed value or as function of time elapsed.
 We call asymptotic bounds on the scaling relationship between size and time  the ``size order of growth.''
 We also define hard bounds, referred to as a ``size cap,'' in light of practical considerations, e.g., fixed size memory allocation to store a curated collection.
 
-Specification of gap size requirements must consider a second factor in addition to time elapsed.
-Bounds on spacing between retained observations, a ``resolution guarantee,'' should also depend on the depth of a particular observation back in time.
-Taking into account historical depth allows consideration of skew in retained observation density.
-For instance, observations may be retained along evenly-spaced time points or, alternately, thinned proportionately to historical depth.
+% Specification of gap size requirements must consider a second factor in addition to time elapsed.
+Bounds on spacing between retained observations, a ``resolution guarantee,'' should depend on both the elapsed time and the temporal depth of a particular observation.
+Taking into account historical depth allows skew in retained observation density.
+For instance, observations may be retained at evenly-spaced time points or, alternately, thinned proportionately to historical depth.
 The latter approach biases observational detail to recent time, which may be important in some use cases.
 
-In the context of hereditary stratigraphy, recency-proportional resolution is typically preferable.
+% @ELD could cut this paragraph
+For example, in the context of hereditary stratigraphy, recency-proportional resolution is typically preferable.
 Coalescent theory predicts a tendency for evolution-like processes to produce phylogenies with many recent branches and progressively fewer ancient branches \citep{nordborgCoalescentTheory2019, berestyckiRecentProgressCoalescent2009}.
 Thus, fine inferential detail over recent time points usually proves more informative to phylogenetic reconstruction than detail over more ancient time points.
 Indeed, trials reconstructing known lineages have found that recency-skewing retention provides better quality reconstructions \citep{moreno2022hereditary}.
@@ -41,8 +42,8 @@ Policy algorithms must meet several requirements.
 
 First and foremost, each of an algorithm's retention sets should satisfy all stipulated requirements on collection size and gap size.
 
-Additionally, to be viable, each retention set's complement (i.e., discarded observations) must superset that of all preceding retention sets.
-Otherwise, a previously discarded observation would be called for inclusion.
+Additionally, to be viable, each retention set must be a subset of all preceding retention sets.
+Otherwise, a previously discarded observation would be selected for inclusion, which is impossible (once data is discarded it cannot be retrieved).
 We call this property self-consistency.
 
 For the sake of efficient operation, we impose a final nuts-and-bolts requirement on algorithm implementation: computational reducibility, meaning that observation times retained at any point must be directly enumerable.
@@ -52,6 +53,7 @@ In the context of hereditary stratigraphy --- where e.g., observations are singl
 Memory savings from computational reducibility can matter greatly.
 Since the austere early days of computing, typical hardware has trended away from resource scarcity \citep{kushida2015cloud}, yet memory efficiency remains crucial in certain contexts where hardware trends have stagnated or even regressed memory capacity.
 
+% @ELD could cut next couple paragraphs
 Aspects of high-performance computing (HPC) expect to continue scaling out with lean processing cores \citep{sutter2005free,morgenstern2021unparalleled}.
 The Cerebras Wafer-Scale Engine (WSE) epitomizes this trend, packaging an astounding 850,000 computing elements onto a single die.
 Individual WSE cores, however, have just 48kb of memory and can only communicate within a local mesh \citep{cerebras2021wafer,lauterbach2021path}.
@@ -71,17 +73,17 @@ Our depth-proportional resolution (Section \ref{sec:depth-proportional-resolutio
 \citep{zhao2005generalized}.
 The depth-proportional resolution structure has appeared additionally in ``pyramidal'' and ``tilted'' time window schemes \citep{aggarwal2003framework,han2005stream}.
 
-To our knowledge, all provided implementations all unfold through stateful iteration, with representational overhead for each stored value (viz. segment length values) and stateless enumerations of retained set composition are original to this work.
+To our knowledge, these previous implementations all unfold through stateful iteration, with representational overhead for each stored value (viz. segment length values); stateless enumerations of retained set composition are original to our work in this paper.
 We are also not aware of existing equivalents or near-equivalents of the presented geometric sequence $n$th root and curbed recency-proportional resolution policy algorithms (Sections \ref{sec:geom-seq-nth-root-algo} and \ref{sec:curbed-recency-proportional-resolution-algo}).
 
 Work on ``amnesic approximation'' tackles a similar end goal, but has only loose technical overlap.
-\cite{palpanas2004online} provides a generalized scheme to incrementally down sample a data stream pursuant to a user-defined time-back-to-value function by means of a stateful iterative process.
+\cite{palpanas2004online} provides a generalized scheme to incrementally down-sample a data stream pursuant to a user-defined time-back-to-value function by means of a stateful iterative process.
 
 \subsubsection{Applications of Stream Curation}
 
 Correspondences between stream curation and more general binning on data streams suggest avenues for application of stream curation policy algorithms across data stream scenarios.
 
-Perhaps most plainly, the stream curation down sampling task parallel those faced by unattended data logger devices, which manage incoming observation streams, often on an indefinite or indeterminate basis.
+Perhaps most plainly, the stream curation down-sampling problem parallels those faced by unattended data logger devices that manage incoming observation streams, often on an indefinite or indeterminate basis.
 Devices incorporated into wireless sensor networks may also experience irregular device uplink schedules.
 The ``mobile sink'' paradigm \citep{jain2022survey}, for example, relies on network base station(s) that physically traverse the coverage area and uplink sensor nodes on potentially sporadic patrol schedules.
 

@@ -4,7 +4,7 @@
 % The geometric sequence $n$th root (GSNR) policy algorithm tackles recency-proportional uncertainty objectives within a fixed memory capacity constraint.  is that ok??????? yeah that looks good!! fixed-size memory? among observations? i like it!
 The geometric sequence $n$th root (GSNR) policy algorithm arranges recency-proportional gap sizes among a capped-size set of retained observations.
 % Although recency-proportional gap size will not be bounded below a fixed threshold in this context, GSNR seeks to minimize it to the extent possible.
-Although recency-proportional gap size will not be bounded below a fixed threshold in this context, GSNR seeks to minimize gap size as much as possible.
+Although recency-proportional gap size will not be bounded to a fixed threshold in this context, GSNR seeks to minimize gap size as much as possible.
 
 Recall that the recency-proportional policy algorithm (RPR) exhibits logarithmic growth in extant record size with respect to record depth $n$.
 When an increased order of magnitude depth is reached, additional observations must be retained under the RPR algorithm.
@@ -16,6 +16,7 @@ As $n$ increases, additional levels of structural hierarchy become necessary.
 These additional hierarchical levels increase extant record size.
 % Put another way, progression of the policy algorithm accommodates additional appending an additional level of hierarchy.
 % ELD: I feel like I was supposed to come away from this paragraph understanding what problem GSNR is trying to solve, but I don't
+% @ELD 2024: this comment applies more to the paragraph before this one now, but I think we're still not doing a great job of motivating GSNR
 
 In order to prevent such unbounded growth, the GSNR policy algorithm fixes the number of hierarchical levels $a$ and accommodates additional record depth by adjusting the multiplicative factor $b$.
 This scheme can be imagined enforcing as arrangement of $a$ exponentially-spaced target points along the historical record.
