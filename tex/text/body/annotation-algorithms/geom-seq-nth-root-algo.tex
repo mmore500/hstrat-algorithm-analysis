@@ -4,7 +4,7 @@
 % The geometric sequence $n$th root (GSNR) policy algorithm tackles recency-proportional uncertainty objectives within a fixed memory capacity constraint.  is that ok??????? yeah that looks good!! fixed-size memory? among observations? i like it!
 The geometric sequence $n$th root (GSNR) policy algorithm arranges recency-proportional gap sizes among a capped-size set of retained observations.
 % Although recency-proportional gap size will not be bounded below a fixed threshold in this context, GSNR seeks to minimize it to the extent possible.
-Although recency-proportional gap size will not be bounded to a fixed threshold in this context, GSNR seeks to minimize gap size as much as possible.
+Although recency-proportional gap size will not be bounded to a fixed threshold in this context, GSNR seeks to minimize worst relative gap size as much as possible.
 
 Recall that the recency-proportional policy algorithm (RPR) exhibits logarithmic growth in extant record size with respect to record depth $n$.
 When an increased order of magnitude depth is reached, additional observations must be retained under the RPR algorithm.
@@ -197,8 +197,9 @@ So, the worst case absolute provided gap size is
 Worst case recency-proportional gap size is therefore $n^{1/a}$.
 
 Figure \ref{fig:retention-policies} includes a time-lapse of the extant record under the GSNR policy algorithm.
-The distinguishing feature of the GSNR policy algorithm is its sustained effort to minimize recency-proportional gap size without unbounded record size growth.
-% ELD: What does indefinitely mean here?
+The distinguishing feature of the GSNR policy algorithm is its sustained mitigation of worst recency-proportional gap size without unbounded record size growth.
+% ELD: are we saying "effort" because its an in practice benefit but not a provable asymptotic one?
+% MAM: trying to mean that it's asymptotic but not perfect
 This lends it to very-long duration applications.
 % However, before very-deep record depths, we have observed that recency-proportional resolution tends to better distribute equivalent numbers of retained observations.
 
