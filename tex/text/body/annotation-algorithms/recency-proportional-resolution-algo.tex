@@ -27,18 +27,18 @@ Figure \ref{fig:retention-policies} includes a time-lapse of the extant record u
 
 The extant record is determined iteratively, beginning at observation time zero --- which is always retained.
 Per Equation \ref{eqn:rpr-gap}, gap width to the next retained observation can be at most $\lfloor n/r \rfloor$ sites, where $n$ is record depth.
-Although selecting to retain the $\lfloor n/r \rfloor$ observation time observation would satisfy policy resolution guarantees, a slight complication is necessary to ensure that retained observations have previously been deleted.
-A fuller self-consistency rationale will follow, but in short gap width is floored to the next lower power of two,
+Although retaining the observation at time $\lfloor n/r \rfloor$ would satisfy policy resolution guarantees, a slight complication is necessary to ensure self-consistency.
+A fuller rationale will follow, but in short, gap width is floored to the next lower power of two,
 \begin{align*}
   2^{\lfloor \log_{2}\left(\frac{n}{r}\right) \rfloor}.
 \end{align*}
-The next iteration repeats the procedure from the newly retained observation time instead of observation time zero.
+The next iteration repeats the procedure from the newly retained observation time instead of from time zero.
 Iteration continues until reaching the newest observation.
 
 The set of observations to eliminate can be calculated from set subtraction between enumerations of the historical record at time points $t-1$ and $t$.
 So, update time complexity follows from extant record enumeration time complexity, which turns out to be $O(\log n)$.
 We provide a tested, but unproven, constant-time pruning enumeration implementation in the \texttt{hstrat} library, but will not cover it here. % mention why?
-The extant record order of growth $O(\log n)$ also follows closely from the record enumeration algorithm, as detailed in Theorem \ref{thm:recency-proportional-resolution-algo-space-complexity}.
+The extant record order of growth of $O(\log n)$ also follows from the record enumeration algorithm, as detailed in Theorem \ref{thm:recency-proportional-resolution-algo-space-complexity}.
 
 % TODO figure?
 
@@ -67,7 +67,7 @@ Preliminarily, maintaining 3\% relative precision appears sufficient to eliminat
 
 The RPR policy algorithm's indefinite stability may be particularly useful in scenarios of indefinite or indeterminate record keeping duration.
 Although annotation extant record size grows unboundedly, logarithmic memory usage growth is manageable in most practical scenarios.
-However, this policy would not suit applications with hard caps on annotation size (e.g., fixed memory footprint digital genomes).
+However, this policy would not suit applications with hard caps on annotation size. %(e.g., fixed memory footprint digital genomes).
 
 \input{alg/recency-proportional-resolution-algo-gen-drop-ranks.tex}
 % \input{alg/recency-proportional-resolution-algo-pred-keep-rank.tex}

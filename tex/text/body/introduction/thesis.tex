@@ -1,30 +1,32 @@
-Absent indefinitely provisioned storage capacity, for any online computation data eviction or digestion eventually becomes necessary to continue accepting input \citep{gaber2005mining}.
-This constraint is crux to algorithm design for data streams, scenarios involving read-once inputs available only in a strictly determinate sequence.
+Absent indefinite storage capacity, any piece of incoming streaming data must eventually be either evicted or digested if space is to be made available for new input \citep{gaber2005mining}.
+This constraint is a crucial consideration in algorithm design for data streams, scenarios involving read-once inputs available only in a strictly ordered sequence.
 Such streams' ordering may be dictated by inherently real-time processes (e.g., sensor readings) or retrieval limitations of storage media (e.g., a tape archive) \citep{henzinger1998computing}.
 The data streaming model assumes input greatly exceeds memory capacity, with many analyses simply treating streams as unbounded \citep{jiang2006research}.
 
-Data streaming scenarios pervade domain contexts across science and industry \citep{aggarwal2009data,akidau2015dataflow}.
-Commercial application areas include sensor networks \citep{elnahrawy2003research}, big-data analytics \citep{he2010comet}, real-time network traffic analysis \citep{johnson2005streams,muthukrishnan2005data}, systems administration \citep{fischer2012real}, and financial analytics for fraud prevention and algorithmic trading \citep{rajeshwari2016real,agarwal2009faster},
+Data streaming scenarios pervade domains across science and industry \citep{aggarwal2009data,akidau2015dataflow}.
+Commercial application areas include sensor networks \citep{elnahrawy2003research}, big-data analytics \citep{he2010comet}, real-time network traffic analysis \citep{johnson2005streams,muthukrishnan2005data}, systems administration \citep{fischer2012real}, and financial analytics for fraud prevention and algorithmic trading \citep{rajeshwari2016real,agarwal2009faster}.
 Notable scientific applications arise in environmental/climate monitoring \citep{hill2009real} and astronomy \citep{graham2012data}.
 Purely-programmatic computation can also behave as a data stream --- iterative simulation processes traverse vast expanses of ephemeral intermediate state that must be traced to verify simulation dynamics and assess simulation outcomes \citep{abdulla2004simulation,schutzel2014stream}.
 
 Indeed, this broad utility has begot an extensive corpus of data stream algorithms.
-Common objectives include moving summary statistic calculations \citep{lin2004continuously}, on-the-fly data clustering \citep{silva2013data}, live anomaly detection \citep{cai2004maids}, and rolling event frequency estimation \citep{manku2002approximate}.
+Common objectives include rolling summary statistic calculations \citep{lin2004continuously}, on-the-fly data clustering \citep{silva2013data}, live anomaly detection \citep{cai2004maids}, and rolling event frequency estimation \citep{manku2002approximate}.
 Data stream algorithms typically draw on one or more of three key stratagems: (1) rolling mechanisms, which restrict consideration to a FIFO tranche of recent data, (2) accumulation, which successively folds data into a summary statistic (e.g., sum, count, etc.) where data is repeatedly applied to a fixed amount of memory or resources, and (3) binning, which consolidates data within time interval bins to create a coarsened record.
 
-Here, we focus on applications of the third stratagem, binning.
+Here, we focus on the third stratagem, binning.
 Specifically, we develop efficient procedures to maintain temporally-representative subsamples of a data stream on a rolling basis.
 That is, to read sequential observations from a data stream on an ongoing basis and sequence their disposal to maintain a record of data stream observations.
 
 We term the rolling management of samples subsetted from a data stream as ``stream curation.''
 Proposed algorithms span several possible requirements for two curatorial properties: (1) ``order of growth'' --- how curated collection size should grow in proportion to stream depth and (2) ``gap size bounds'' --- how retained samples should be spaced across stream history.
 These considerations arise in various combinations across existing work \citep{aggarwal2003framework,han2005stream}, reviewed in detail later on;
-here, we systematize across these curational properties and contribute novel curatorial policy implementations distinguished by efficiency.
+here, we systematize these curational properties and contribute novel curatorial policy implementations distinguished by efficiency.
 Each contributed policy includes indexing schemes that simultaneously support both efficient update operations and efficient storage of retained stream values in a flat array, requiring only $O(1)$ storage overhead --- a single counter value.
 
 Although we do not treat it directly here, the original motivating application for contributed stream curation algorithms is ``hereditary stratigraphy,'' a recently-developed technique for distributed tracking of copy trees among replicating digital artifacts \citep{moreno2022hereditary}.
 Applications of such tracking include phylogenetic analysis of highly-distributed genetic algorithms and evolutionary simulations, and provenance analysis of decentralized social network content, peer-to-peer file sharing, and computer viruses.
 A brief description of hereditary stratigraphy is instructive to the timbre of algorithms contributed here.
+
+\subsection{Hereditary Stratigraphy}
 
 In order to reconstruct histories of relatedness, hereditary stratigraphy annotates replicating artifacts with a record of checkpoint fingerprints that grows by accretion with each replication event.
 Comparing two artifacts' checkpoint records tells the extent of their common ancestry, as annotations will share common fingerprints up through the time of their last common ancestor and then differ.
