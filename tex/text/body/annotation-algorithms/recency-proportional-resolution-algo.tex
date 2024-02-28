@@ -7,7 +7,9 @@ Recall that the DPR policy algorithm's gap widths grow in linear proportion to r
 In contrast, the fixed resolution algorithm's gap width remains constant below a specified bound across record depths.
 
 The recency-proportional resolution (RPR) policy algorithm bounds gap width to a linear factor of layer age (i.e., time steps back from the newest layer).
-Suppose $n$ observations have elapsed.
+Here, layer refers to the $m$th element ingressed from the underlying data stream being curated.
+
+Suppose $n$ data stream observations have elapsed.
 % set k as age and explain that then replace n - m
 % annotate-equations (latex math annotation?)
 Then, for a user-specified constant $r$, no gap width for layer $m$ will exceed size
