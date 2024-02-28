@@ -197,8 +197,9 @@ So, the worst case absolute provided gap size is
 Worst case recency-proportional gap size is therefore $n^{1/a}$.
 
 Figure \ref{fig:retention-policies} includes a time-lapse of the extant record under the GSNR policy algorithm.
-The distinguishing feature of the GSNR policy algorithm is its sustained effort to minimize recency-proportional gap size without unbounded record size growth.
-% ELD: What does indefinitely mean here?
+The distinguishing feature of the GSNR policy algorithm is its sustained mitigation of worst recency-proportional gap size without unbounded record size growth.
+% ELD: are we saying "effort" because its an in practice benefit but not a provable asymptotic one?
+% MAM: trying to mean that it's asymptotic but not perfect
 This lends it to very-long duration applications.
 % However, before very-deep record depths, we have observed that recency-proportional resolution tends to better distribute equivalent numbers of retained observations.
 
