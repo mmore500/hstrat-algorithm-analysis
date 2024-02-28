@@ -16,9 +16,11 @@ We first discuss stratum curation policy trade-off stipulation criteria and poli
 
 Two primary dimensions of stream curation policy matter for practical purposes: 1) retained collection size and 2) time gap sizes between retained observations.
 
-To specify requirements on retained collection size, we bound retained observation count to a fixed value or as function of time elapsed.
-We call asymptotic bounds on the scaling relationship between size and time  the ``size order of growth.''
-We also define hard bounds, referred to as a ``size cap,'' in light of practical considerations, e.g., fixed size memory allocation to store a curated collection.
+% To specify requirements on retained collection size,
+% @ELD: is it okay to drop mention of observation count for readability or will this cause problems?
+We bound retained collection size to a fixed value or a function of time elapsed.
+Asymptotic bounds on the scaling relationship between collection size and time are the ``size order of growth.''
+In some cases, we also define hard bounds, referred to as a ``size cap,'' in light of practical considerations; for example, a user may have a fixed size memory allocation in which to store a curated collection.
 
 % Specification of gap size requirements must consider a second factor in addition to time elapsed.
 Bounds on spacing between retained observations, a ``resolution guarantee,'' should depend on both the elapsed time and the temporal depth of a particular observation.
