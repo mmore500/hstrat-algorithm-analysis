@@ -12,8 +12,8 @@ Choosing a low resolution to provide support for long historical depths would ca
 Nevertheless, at even the lowest possible parameterized resolution, extant record size will eventually outgrow any size cap under RPR.
 
 The CRPR policy algorithm delivers the best of both worlds: full, effective storage space use of high-resolution parameterized RPR policy plus the graceful, indefinite tail support of GSNR policy.
-It does this, actually, by stitching these two policy algorithms together.
-In fact, CRPR stitches successively degrading RPR parameterizations together and then, once the lowest-resolution RPR policy would exceed available space, it switches to GSNR.
+It achieves this balance by splicing these two policy algorithms together, transitioning from RPR to GSNR once the lowest-resolution RPR policy would exceed available space.
+Before reaching that point of transition to GSNR, CRPR maximizes use of available space by cycling through a series of successively lower-resolution RPR parameterizations, downgrading each time usage would exceed available space.
 The CRPR policy algorithm itself provides $\mathcal{O}(1)$ extant record size order of growth, and is parameterized by a desired upper bound $m$ on retained observation count.
 Support is provided for $m \geq 8$.
 
