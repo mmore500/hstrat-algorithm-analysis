@@ -3,7 +3,7 @@
 
 The fixed resolution (FR) policy algorithm adopts a simplistic strategy: retain observation time points at intervals of a user-specified factor $r$.
 This procedure equates to naive downsampling via decimation \citep[p. 31]{crochiere1983multirate}.
-We include discussion of this policy algorithm primarliy for completeness.
+We include discussion of this policy algorithm primarily for completeness.
 
 The procedures to decide eliminated time points during the update process and to enumerate retained observation times are trivial.
 Pruning targets time points that are not multiples of the fixed resolution $r$ and enumeration traverses time points at an even stride $r$ until reaching record depth.
