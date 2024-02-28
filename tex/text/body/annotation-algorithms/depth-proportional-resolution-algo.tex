@@ -14,14 +14,12 @@ Beacause multiples of a binary power superset multiples of higher binary power, 
 As intuition, therefore, the full DPR policy algorithm can be conceived of through a simple principle: %successive eliminations of every other retained observation when a capacity threshold is reached.
 each time a capacity threshold is reached, every second observation is eliminated.
 
-Binary floor approximation exhibits another useful property: policy algorithm property distortions can be bounded by a constant.
-With respect to the initial naive supposition, gap width is at most halved.
-So, extant record count is at most doubled.
-We structure parameterization of the DPR policy algorithm to account for divagation from binary flooring.
-Policy algorithm behavior proceeds from a specified minimum gap count among retained observations, $r$.
-(Note that $r$ also corresponds to minimum the number of distinguishable granules over record history.)
-An absolute resolution guarantee of at least $n/r$, with $n$ as record depth, follows.
-Thus, DPR has a constant extant record size order of growth, capped as extant observation count of $2r$.
+% Binary floor approximation exhibits another useful property: policy algorithm property distortions can be bounded by a constant.
+% Minimum gap width is half of the highest allowed gap width, while maximum extant record count is twice the lowest allowed count.
+Policy algorithm behavior is parametrized by a minimum number of bin windows over record history, $r$.
+All gap sizes are equal (or halved), so absolute resolution guarantee of at least $n/r$, with $n$ as record depth, applies.
+Further, because under binary floor approximation gap width is at most halved, extant record count is at most doubled.
+This property gives the record size cap of $2r$.
 
 Algorithm \ref{alg:depth-proportional-resolution-algo-enum-retained-ranks} provides enumeration of retained time points under the DPR scheme.
 Although enactment can be parsimoniously formulated as set subtraction between enumerations at successive time points with $\mathcal{O}(1)$ complexity, Algorithm \ref{alg:depth-proportional-resolution-algo-gen-drop-ranks} addends a more expedient approach.
