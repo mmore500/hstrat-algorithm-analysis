@@ -18,7 +18,7 @@ each time a capacity threshold is reached, every second observation is eliminate
 % Minimum gap width is half of the highest allowed gap width, while maximum extant record count is twice the lowest allowed count.
 Policy algorithm behavior is parametrized by a minimum number of bin windows over record history, $r$.
 All gap sizes are equal (or halved), so absolute resolution guarantee of at least $n/r$, with $n$ as record depth, applies.
-Further, because binary flooring at most halves gap width, it at most doubles record count.
+Further, because binary flooring operations at most halve gap widths, record count at most doubles.
 This property gives the record size cap of $2r$.
 
 Algorithm \ref{alg:depth-proportional-resolution-algo-enum-retained-ranks} provides enumeration of retained time points under the DPR scheme.
