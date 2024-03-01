@@ -84,7 +84,7 @@ We will retain the time point set $S_x$ comprising multiples of $\kappa$ at or a
   S_x(n) = \{\, t \mid \beta(n) \leq t < n \text{ and } t \mod \kappa(n) = 0 \,\}.
 \end{align*}
 
-Why are time points $S_x(n)$ guaranteed to be a subset of $S_x(n-1) \cup \{n\}$ (i.e., self consistency)?
+Why are time points $S_x(n)$ guaranteed to be a subset of $S_x(n-1) \cup \{n\}$ (i.e., self-consistency)?
 Consider several non-mutually exclusive possible scenarios that could occur when transitioning from $n - 1$ to $n$,
 \begin{enumerate}
   \item $\kappa$ changes: $\kappa(n - 1) \neq \kappa(n)$.
@@ -98,7 +98,7 @@ Consider several non-mutually exclusive possible scenarios that could occur when
     &\subseteq \{\, t \mid \beta(n) \leq t < n \text{ and } t \mod \kappa(n - 1) = 0 \,\}.
   \end{align*}
   Also, because $\beta$ monotonically increasing, $\beta{n - 1} \leq \beta{n}$.
-  
+
   In conjunction, these stipulations give us $S_x(n) \subseteq \{S_x(n - 1), n\}$.
   % ELD: indentation is kind of wonky here
 
