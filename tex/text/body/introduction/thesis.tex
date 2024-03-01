@@ -19,7 +19,7 @@ That is, to read sequential observations from a data stream on an ongoing basis 
 We term the rolling management of samples subsetted from a data stream as ``stream curation.''
 Proposed algorithms span several possible requirements for two curatorial properties: (1) ``order of growth'' --- how curated collection size should grow in proportion to stream depth and (2) ``gap size bounds'' --- how retained samples should be spaced across stream history.
 These considerations arise in various combinations across existing work \citep{aggarwal2003framework,han2005stream}, reviewed in detail later on;
-here, we systematize these curational properties and contribute novel curatorial policy implementations distinguished by efficiency.
+here, we systematize these curatorial properties and contribute novel curatorial policy implementations distinguished by efficiency.
 Each contributed policy includes indexing schemes that simultaneously support both efficient update operations and efficient storage of retained stream values in a flat array, requiring only $O(1)$ storage overhead --- a single counter value.
 
 % @ELD TODO also cite JOSS paper

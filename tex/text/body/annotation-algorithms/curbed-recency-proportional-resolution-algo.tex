@@ -46,7 +46,7 @@ In describing the CRPR algorithm, we will build off the properties of the RPR an
 Under the CRPR, at any given point in time either the RPR or GSNR is currently active.
 If RPR is active, resolution parameterization depends on record depth $n$.
 Whichever algorithm is currently active enumerates retained observation time points.
-Time points to delete can be calculated through set subtraction of of subsequential curated collection enumerations.
+Time points to delete can be calculated through set subtraction of sequential curated collection enumerations.
 Because curated collection size is bounded, this procedure is $\mathcal{O}(1)$.
 Asymptotic properties result solely from GSNR, as it constitutes the final destination of the CRPR stitched policy sequence.
 Except when switching CRPR's active policy algorithm, we can also carry forward self-consistency assurances from the existing RPR and GSNR policy algorithms.
@@ -54,7 +54,7 @@ However, when switching CRPR's active policy algorithm, we do need to assess sel
 Transitioned-to time point collections must be a subset of transitioned-from time point collections.
 % As Theorem \ref{thm:curbed-recency-proportional-resolution-algo-self-consistency} recounts, self-consistency largely arises from peculiarities of stacking monotonically decreasing binary powers.
 Self-consistency turns out to largely arise from peculiarities of stacking monotonically decreasing binary powers.
-% @ELD I feel like we ahould probably add the theorem back in? TODO
+% @ELD I feel like we should probably add the theorem back in? TODO
 
 
 In application, the CRPR policy algorithm should be preferable to GSNR and RPR for nearly all scenarios that call for recency-proportional resolution under capped-size storage limitations.
