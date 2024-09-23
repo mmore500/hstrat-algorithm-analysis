@@ -67,15 +67,33 @@ jobs:
       image: ghcr.io/mmore500/hstrat-algorithm-analysis:GITHUB_ACTION_${{ github.run_number }}_TEXIMAGE
       # github actions requires root to access mounted volumes
       options: --user root
+    permissions:
+      contents: write
+      id-token: write
+      pages: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: 'recursive'
       - run: tree tex  # debug
-      - run: make -C tex quick
-      - run: make -C tex
-      - name: Upload output as artifact
-        uses: actions/upload-artifact@v4
+      - name: Build LaTeX document
+        run: |
+          trap 'cat tex/*.log || true >> "$GITHUB_OUTPUT"' EXIT
+          make -C tex
+      - name: Prepare deploy directory
+        run: |
+          mkdir -p deploy
+          cp tex/${{ github.event.repository.name }}-draft.pdf deploy/
+          echo '<html><body><a href="${{ github.event.repository.name }}-draft.pdf">Download Manuscript Draft [PDF]</a></body></html>' > deploy/index.html
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          name: manuscript
-          path: tex/hstrat-algorithm-analysis-draft.pdf
+          path: deploy
+        if: github.ref == 'refs/heads/master'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+        if: github.ref == 'refs/heads/master'
