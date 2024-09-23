@@ -58,7 +58,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: 'recursive'
-      - run: tree tex  # debug
       - name: Build LaTeX document
         run: |
           trap 'cat tex/*.log || true >> "$GITHUB_OUTPUT"' EXIT
