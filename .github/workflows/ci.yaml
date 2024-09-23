@@ -12,23 +12,6 @@ on:
     - cron: '0 0 * * 0'
 jobs:
 
-  docker-teximage-build:
-    name: Docker Tex Image Build
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build and Push to GitHub Container Registry
-        uses: docker/build-push-action@v1
-        with:
-          push: true
-          tags: "GITHUB_ACTION_${{ github.run_number }}_TEXIMAGE"
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          repository: mmore500/hstrat-algorithm-analysis
-          registry: ghcr.io
-          path: ./tex/
-          add_git_labels: true
-
   py-unit:
     name: Pylib Unit Tests
     runs-on: ubuntu-22.04
@@ -61,11 +44,8 @@ jobs:
   latex:
     name: Latex Build
     runs-on: ubuntu-22.04
-    needs:
-      - docker-teximage-build
     container:
-      image: ghcr.io/mmore500/hstrat-algorithm-analysis:GITHUB_ACTION_${{ github.run_number }}_TEXIMAGE
-      # github actions requires root to access mounted volumes
+      image: ghcr.io/mmore500/teximage:sha-77b8179
       options: --user root
     permissions:
       contents: write
