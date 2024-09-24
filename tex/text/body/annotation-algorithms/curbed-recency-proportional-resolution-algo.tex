@@ -5,6 +5,22 @@ The curbed recency-proportional resolution (CRPR) policy algorithm exists to enh
 This policy algorithm combines the geometric sequence $n$th root (GSNR) and recency-proportional resolution (RPR) algorithms to harness the strengths of both.
 Figure \ref{fig:retention-policies} includes a time-lapse of the extant record under the CRPR policy algorithm.
 
+The set of items retained under curbed recency-proportional resolution is defined as,
+%TODO checkme
+\begin{align}
+\mathsf{CRPR\_kept}(\colorT)
+&=
+\begin{cases}
+\mathsf{RPR\_kept}_r(\colorT)
+\text{ where }
+r = \left \lfloor \frac{m}{\left\lceil \log_2(\colorT) \right\rceil} - 1 \right\rfloor
+ & \text{ if } \colorT \leq \left\lfloor \frac{2^{\lfloor m/3 \rfloor}}{2} \right\rfloor \\
+\mathsf{GSNR\_kept}_m(\colorT)
+& \text{ otherwise.}
+\end{cases}
+\label{eqn:crpr_kept}
+\end{align}
+
 The GSNR algorithm sustains best-effort recency-proportional resolution to asymptotic limits, but distributes retained observations less effectively than RPR in earlier periods.
 This can result in higher realized worst-case recency-proportional gap size than necessary.
 However, RPR only makes use of available storage space up to the retention density of its parameterized resolution.
