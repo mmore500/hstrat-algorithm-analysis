@@ -21,6 +21,19 @@ Resolution at each layer widens linearly with record depth.
 Consequently, resolution widens in linear proportion to layer age.
 Resolution for any given layer age, however, remains constant for all record depths.
 
+The set of items retained under recency-proportional resolution is defined as,
+\begin{align}
+\mathsf{RPR\_kept}(\colorT)
+&= \{
+\colorTbar \in [0\twodots\colorT)
+: \colorTbar \bmod R = 0 \text{ or } \colorTbar = \colorT - 1
+\}
+\text{ where }
+R = \max\Big(\left \lfloor \frac{\colorT  - 1 - \colorTbar}{r + 1} \right \rfloor_{\mathrm{bin}}, \;\; 1\Big).
+\label{eqn:rpr_kept}
+\end{align}
+We demonstrate self-consistency over elapsed time $\colorT$ in Suplementary Theorem \ref{thm:recency-proportional-algo-self-consistency}.
+
 The FR and DPR policy algorithms exhibit $O(r)$ and $O(rn)$ extant record orders of growth, respectively.
 We will show extant record order of growth as $O(r\log{n})$ under the recency-proportional resolution policy algorithm.
 
@@ -41,25 +54,6 @@ The set of observations to eliminate can be calculated from set subtraction betw
 So, update time complexity follows from extant record enumeration time complexity, which turns out to be $O(\log n)$.
 We provide a tested, but unproven, constant-time pruning enumeration implementation in the \texttt{hstrat} library, but will not cover it here. % mention why?
 The extant record order of growth of $O(\log n)$ also follows from the record enumeration algorithm, as detailed in Theorem \ref{thm:recency-proportional-resolution-algo-space-complexity}.
-
-% TODO figure?
-
-Why does flooring step sizes to a binary power ensure self-consistency?
-Let us begin by noting properties applicable to all layers $l$,
-\begin{enumerate}
-\item gap width provided at retained layer $l$ increases monotonically as record depth grows,
-\item the retained observation preceding or at $l$ has observation time at an even multiple of surrounding gap widths, and
-\item all observations at time points that are multiples of gap width past $l$ up to the newest observation are retained.
-\end{enumerate}
-Observe that gap width decreases monotonically with decreasing layer age (i.e., increasing layer recency).
-
-Properties 2 and 3 occur as a result of stacking monotonically-decreasing powers of two.
-Subsequent smaller powers of two tile evenly to all multiples of a larger power of 2, giving property 3.
-Conversely, preceding larger powers of 2 can be evenly divided by succeeding smaller powers of 2, ensuring that the edges of smaller powers of 2 gaps occur at even multiples of their gap width, giving property 2.
-
-Under the binary flooring procedure, when gap size increases at a layer it will double (or quadruple, octuple, etc.).
-Availability of the new gap endpoint after a gap size increase is guaranteed from the tiling properties due to that endpoint being an even multiple of original step size.
-% Theorem \ref{thm:recency-proportional-resolution-algo-self-consistency} uses inductive proof-by-contradiction to show this self-consistency.
 
 % @ELD could cut this paragraph @MAM putting in footnote
 The RPR policy algorithm provides stable relative accuracy indefinitely.
