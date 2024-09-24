@@ -81,7 +81,7 @@ Because $B(n)$ is monotonically increasing, $\beta(n)$ is as well.
 
 We will retain the time point set $S_x$ comprising multiples of $\kappa$ at or after the backstop $\beta$,
 \begin{align*}
-  S_x(n) = \{\, t \mid \beta(n) \leq t < n \text{ and } t \mod \kappa(n) = 0 \,\}.
+  S_x(n) = \{\, t \mid \beta(n) \leq t < n \text{ and } t \bmod \kappa(n) = 0 \,\}.
 \end{align*}
 
 Why are time points $S_x(n)$ guaranteed to be a subset of $S_x(n-1) \cup \{n\}$ (i.e., self-consistency)?
@@ -94,8 +94,8 @@ Consider several non-mutually exclusive possible scenarios that could occur when
   Thus, $\kappa(n)$ is an even multiple of $\kappa(n - 1)$.
   So,
   \begin{align*}
-    &\{\, t \mid \beta(n) \leq t < n \text{ and } t \mod \kappa(n) = 0 \,\}\\
-    &\subseteq \{\, t \mid \beta(n) \leq t < n \text{ and } t \mod \kappa(n - 1) = 0 \,\}.
+    &\{\, t \mid \beta(n) \leq t < n \text{ and } t \bmod \kappa(n) = 0 \,\}\\
+    &\subseteq \{\, t \mid \beta(n) \leq t < n \text{ and } t \bmod \kappa(n - 1) = 0 \,\}.
   \end{align*}
   Also, because $\beta$ monotonically increasing, $\beta{n - 1} \leq \beta{n}$.
 
@@ -105,12 +105,12 @@ Consider several non-mutually exclusive possible scenarios that could occur when
   \item $\beta$ changes: $\beta(n - 1) \neq \beta(n)$.
 
   Because $\beta$ is monotonically increasing, $\beta(n - 1) < \beta(n)$.
-  We have $\beta(n) \mod \kappa(n) = 0$.
-  Because $\kappa(n)$ is an even multiple of $\kappa(n - 1)$, we have $\beta(n) \mod \kappa(n - 1) = 0$.
+  We have $\beta(n) \bmod \kappa(n) = 0$.
+  Because $\kappa(n)$ is an even multiple of $\kappa(n - 1)$, we have $\beta(n) \bmod \kappa(n - 1) = 0$.
   This implies $\beta(n) \in S_x(n - 1)$.
   Because $\beta$ monotonically increasing, change in $\beta$ strictly shrinks $S_x(n)$.
 
-  \item $n \mod \kappa(n) = 0$
+  \item $n \bmod \kappa(n) = 0$
 
   Then the observation at time point $n$ is claimed for inclusion within $S_x(n)$.
   It is available, having just presently occurred.
