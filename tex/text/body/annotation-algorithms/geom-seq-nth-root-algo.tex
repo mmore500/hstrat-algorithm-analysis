@@ -84,44 +84,6 @@ We will retain the time point set $S_x$ comprising multiples of $\kappa$ at or a
   S_x(n) = \{\, t \mid \beta(n) \leq t < n \text{ and } t \bmod \kappa(n) = 0 \,\}.
 \end{align*}
 
-Why are time points $S_x(n)$ guaranteed to be a subset of $S_x(n-1) \cup \{n\}$ (i.e., self-consistency)?
-Consider several non-mutually exclusive possible scenarios that could occur when transitioning from $n - 1$ to $n$,
-\begin{enumerate}
-  \item $\kappa$ changes: $\kappa(n - 1) \neq \kappa(n)$.
-
-  Because $\kappa$ is monotonically increasing, $\kappa(n - 1) < \kappa(n)$.
-  Binary flooring procedures have ensured $\kappa(n - 1)$ and $\kappa(n)$ are perfect powers of 2.
-  Thus, $\kappa(n)$ is an even multiple of $\kappa(n - 1)$.
-  So,
-  \begin{align*}
-    &\{\, t \mid \beta(n) \leq t < n \text{ and } t \bmod \kappa(n) = 0 \,\}\\
-    &\subseteq \{\, t \mid \beta(n) \leq t < n \text{ and } t \bmod \kappa(n - 1) = 0 \,\}.
-  \end{align*}
-  Also, because $\beta$ monotonically increasing, $\beta{n - 1} \leq \beta{n}$.
-
-  In conjunction, these stipulations give us $S_x(n) \subseteq \{S_x(n - 1), n\}$.
-  % ELD: indentation is kind of wonky here
-
-  \item $\beta$ changes: $\beta(n - 1) \neq \beta(n)$.
-
-  Because $\beta$ is monotonically increasing, $\beta(n - 1) < \beta(n)$.
-  We have $\beta(n) \bmod \kappa(n) = 0$.
-  Because $\kappa(n)$ is an even multiple of $\kappa(n - 1)$, we have $\beta(n) \bmod \kappa(n - 1) = 0$.
-  This implies $\beta(n) \in S_x(n - 1)$.
-  Because $\beta$ monotonically increasing, change in $\beta$ strictly shrinks $S_x(n)$.
-
-  \item $n \bmod \kappa(n) = 0$
-
-  Then the observation at time point $n$ is claimed for inclusion within $S_x(n)$.
-  It is available, having just presently occurred.
-
-\end{enumerate}
-
-Note that if none of the above occur, then $S_x(n - 1) = S_x(n)$.
-Any combination of the above maintains $S_x(n - 1) \in \{S_x(n), n\}$
-% Theorem \ref{thm:geom-seq-nth-root-algo-self-consistency} details this point.
-
-
 Why does this construction for target $n^{x/a}$ satisfy our $\mathcal{O}(1)$ space complexity constraint?
 It can be shown that $|S_x(n)| \leq 6$.
 This stems from cadence $\kappa$ as the binary floor of half $n^{x/a}$ (at most a quartering reduction) and backstop $\beta$ set at most $3/2 \times n^{x/a}$ time points back.
@@ -164,16 +126,18 @@ Because backstop $\beta \leq n - n ^{x/a}$, the target time point is covered wit
 % Theorem \ref{thm:geom-seq-nth-root-algo-uncertainty-bound} details this point.
 
 We bring curated sets for each target point together in a set union to produce the overall GSNR retained set $R$,
-\begin{align*}
-  R(n)
+\begin{align}
+  \mathsf{GSNR\_kept}(\colorT)
   &=
   \bigcup_{i=0}^{a} S_i(n).
-\end{align*}
+\label{eqn:gsrn_kept}
+\end{align}
 Note that under this construction, policy algorithm self-consistency and extant record size bounds follow from those shown for constructions for individual targets $n^{x/a}$.
+We demonstrate self-consistency over elapsed time $\colorT$ in Suplementary Theorem \ref{thm:geom-seq-nth-root-algo-self-consistency}.
 \footnote{
 A strict upper bound of $6a + 2$ for extant record size can be calculated, although we do not demonstrate it here.
 }
-Time points that should be dropped to enact the GSNR policy algorithm follow from set subtraction between $R(n)$ and $R(n+1)$.
+Time points that should be dropped to enact the GSNR policy algorithm follow from set subtraction between $\mathsf{GSNR\_kept}(n)$ and $\mathsf{GSNR\_kept}(n+1)$.
 
 We have discussed resolution guarantees for individual target point constructions, but what resolution guarantee is afforded overall for an arbitrary time point $t$ with age $g = n - t$?
 For such a time point $t$, the tightest resolution guarantee is that of the next older target point.
