@@ -33,6 +33,7 @@ R = \max\Big(\left \lfloor \frac{\colorT  - 1 - \colorTbar}{r + 1} \right \rfloo
 \label{eqn:rpr_kept}
 \end{align}
 We demonstrate self-consistency over elapsed time $\colorT$ in Suplementary Theorem \ref{thm:recency-proportional-algo-self-consistency}.
+Supplementary Algorithm \ref{alg:recency-proportional-resolution-algo-enum-retained-ranks} provides an implementation enumerating this set.
 
 The FR and DPR policy algorithms exhibit $O(r)$ and $O(rn)$ extant record orders of growth, respectively.
 We will show extant record order of growth as $O(r\log{n})$ under the recency-proportional resolution policy algorithm.
@@ -72,7 +73,6 @@ However, this policy would not suit applications with hard caps on annotation si
 
 \input{alg/recency-proportional-resolution-algo-gen-drop-ranks.tex}
 % \input{alg/recency-proportional-resolution-algo-pred-keep-rank.tex}
-% \input{alg/recency-proportional-resolution-algo-enum-retained-ranks.tex}
 
 % \input{thm/recency-proportional-resolution-algo-self-consistency.tex}
 \input{thm/recency-proportional-resolution-algo-space-complexity.tex}
