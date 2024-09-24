@@ -1,0 +1,45 @@
+\begin{theorem}{Depth-proportional Algorithm Self-Consistency}
+\label{thm:depth-proportional-algo-self-consistency}
+Let $\mathsf{DPR\_kept}(n)$ be the set of data points retained at time point $n$, defined per Equation \ref{eqn:dpr_kept}.
+Showing self-consistency requires that we demonstrate $\forall m \geq 0, n \in [0 \twodots m)$,
+\begin{align*}
+\mathsf{DPR\_kept}(n)
+\geq
+\mathsf{DPR\_kept}(m)
+\setminus
+\mathsf{future}(n, m).
+\end{align*}
+where $\mathsf{future}(n, m) = [n \twodots m - 1)$.
+\end{theorem}
+
+\begin{proof}
+\label{prf:depth-proportional-algo-self-consistency}
+Our goal is equivalent to showing that $\forall m \geq 0, n \in [0 \twodots m)$,
+\begin{align*}
+\mathsf{DPR\_kept}(n) \cup \mathsf{future}(n, m) \geq \mathsf{DPR\_kept}(m).
+\end{align*}
+
+Let
+\begin{align*}
+R_m
+&=
+\max(\left\lfloor m / r \right\rfloor_{\mathrm{bin}}, 1)\\
+R_n
+&=
+\max(\left\lfloor n / r \right\rfloor_{\mathrm{bin}}, 1).
+\end{align*}
+Note that we have both $R_m, R_n \in 2^{\mathbb{N}}$.
+Further, because $n < m$ we have $R_n \leq R_m$.
+From these two observations, we may remark that $R_n$ evenly divides $R_m$
+\begin{align}
+R_m \bmod R_n = 0.
+\label{eqn:rmrn0}
+\end{align}
+
+Suppose $\colorTbar \in \mathsf{DPR\_kept}(m)$.
+In this case, at least one of the following is true (A) $k = m - 1$ or (B) $k \bmod R_m = 0$.
+
+In the first case, $\colorTbar \stackrel{\checkmark}{\in} \mathsf{future}(n, m)$.
+In the second case, we may conclude from Equation \ref{eqn:rmrn0} that $\colorTbar \bmod R_n = 0$.
+So, $\colorTbar \stackrel{\checkmark}{\in} \mathsf{FR\_kept}(n)$.
+\end{proof}
