@@ -27,5 +27,8 @@ ln -sf /tmp/wtf/pre-commit.careful /tmp/hooks/pre-commit
 
 git config --global core.hooksPath /tmp/hooks
 
+pkill python
+(python3 -m http.server > /tmp/pythonserve 2>&1 &)
+
 sleep 1
 clear
