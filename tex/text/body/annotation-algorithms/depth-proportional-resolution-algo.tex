@@ -6,6 +6,19 @@ This guarantee requires retained observations to be spaced with a gap width prop
 %An equivalent interpretation of DPR strategy would be interspersal of the historical record with a fixed number of waypoints.
 Alternatively, DPR can be seen as interspersing the historical record with a fixed number of waypoints.
 
+The set of items retained under depth-proportional resolution is defined as,
+\begin{align}
+\mathsf{DPR\_kept}(\colorT)
+&= \{
+\colorTbar \in [0\twodots\colorT)
+: \colorTbar \bmod R = 0 \text{ or } \colorTbar = \colorT - 1
+\}
+\text{ where }
+R = \max(\left \lfloor \colorT / r \right \rfloor_{\mathrm{bin}}, \;\; 1).
+\label{eqn:fr_kept}
+\end{align}
+We demonstrate self-consistency over elapsed time $\colorT$ in Suplementary Theorem \ref{thm:depth-proportional-resolution-algo-self-consistency}.
+
 Because observation time points are immutable after the fact, translating this naive DPR plan to a rolling, ``online'' basis necessitates a further consideration.
 To conservatively maintain resolution guarantees, it is acceptable to err on the side of caution by choosing gap sizes smaller than the worst-case requirement.
 This approach allows a simple trick for achieving policy self-consistency: flooring gap sizes to the next lower power of two.
