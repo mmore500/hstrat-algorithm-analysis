@@ -1,5 +1,12 @@
 \begin{algorithm}
-\caption{Geometric Sequence $n$th Root Stratum Enumeration}
+\caption{Recency Proportional Resolution Stratum Enumeration}
 \label{alg:recency-proportional-resolution-algo-enum-retained-ranks}
-% STUB ALGORITHM
+\begin{algorithmic}[1]
+    \Require{ \colorT -- the number of strata deposited }
+    \State $\colorTbar \gets 0$
+    \While{$\colorTbar < \colorT$}
+        \State \textbf{yield} $\colorTbar$
+        \State $\colorTbar \gets \colorTbar + \max\Big(\left \lfloor \frac{\colorT  - 1 - \colorTbar}{r + 1} \right \rfloor_{\mathrm{bin}}, \;\; 1\Big)$
+    \EndWhile
+\end{algorithmic}
 \end{algorithm}
