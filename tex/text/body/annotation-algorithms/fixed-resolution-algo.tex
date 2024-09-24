@@ -5,6 +5,17 @@ The fixed resolution (FR) policy algorithm adopts a simplistic strategy: retain 
 This procedure equates to naive downsampling via decimation \citep[p. 31]{crochiere1983multirate}.
 We include discussion of this policy algorithm primarily for completeness.
 
+The set of items retained under fixed resolution is defined as,
+\begin{align}
+\mathsf{FR\_kept}(\colorT)
+&= \{
+\colorTbar \in [0\twodots\colorT)
+: \colorTbar \bmod r = 0 \text{ or } \colorTbar = \colorT - 1
+\}.
+\label{eqn:fr_kept}
+\end{align}
+We demonstrate self-consistency over elapsed time $\colorT$ in Suplementary Theorem \ref{thm:fixed-resolution-algo-self-consistency}.
+
 The procedures to decide eliminated time points during the update process and to enumerate retained observation times are trivial, given in Supplementary Algorithms \ref{alg:fixed-resolution-algo-gen-drop-ranks} and \ref{alg:fixed-resolution-algo-enum-retained-ranks}.
 Pruning targets time points that are not multiples of the fixed resolution $r$ and enumeration traverses time points at an even stride $r$ until reaching record depth.
 Unsurprisingly, order of growth for the record size is $\mathcal{O}(n)$ under this algorithm, owing to the number of retained observations scaling as $\approx n / r$.
