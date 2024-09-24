@@ -21,13 +21,11 @@
   \makecell[{{p{0.14\textwidth}}}]{
   \centering
     \bf{Record Gap Size}\\
-    $\mathcal{O}(n)$\\
+    $\mathcal{O}(\colorT)$\\
     \bf{Retained Records}\\
     $\mathcal{O}(1)$
   }
   \makecell[{{p{0.14\textwidth}}}]{
-  \raggedright
-    where $n$ is gens elapsed.
   }\\\hline
 %-------------------------------------------------------------------------------
     \adjustbox{
@@ -52,11 +50,10 @@
     \bf{Record Gap Size}\\
     $\mathcal{O}(1)$\\
     \bf{Retained Record Size}\\
-    $\mathcal{O}(n)$
+    $\mathcal{O}(\colorT)$
   }
   \makecell[{{p{0.14\textwidth}}}]{
   \raggedright
-    where $n$ is gens elapsed.
   }\\\hline
 %-------------------------------------------------------------------------------
   \adjustbox{
@@ -79,13 +76,11 @@
   \makecell[{{p{0.14\textwidth}}}]{
   \centering
     \bf{Record Gap Size}\\
-    $\mathcal{O}(\log(n))$\\
+    $\mathcal{O}(\log(\colorT))$\\
     \bf{Retained Records}\\
-    $\mathcal{O}(m)$
+    $\mathcal{O}(\colorT - \colorTbar)$
   }
   \makecell[{{p{0.14\textwidth}}}]{
-  \raggedright
-    where $m$ is gens since MRCA and $n$ is total gens elapsed.
   }\\\hline
 %-------------------------------------------------------------------------------
     \adjustbox{
@@ -110,11 +105,10 @@
     \bf{Record Gap Size}\\
     $\mathcal{O}(1)$\\
     \bf{Retained Records}\\
-    $\mathcal{O}(n^{1/a} \times m)$
+    $\mathcal{O}(\colorT^{1/a} \times (\colorT - \colorTbar))$
   }
   \makecell[{{p{0.14\textwidth}}}]{
   \raggedright
-    where $m$ is gens since MRCA, $a$ is a user-chosen constant, and $n$ is total gens elapsed.
   }\\\hline
 %-------------------------------------------------------------------------------
     \adjustbox{
