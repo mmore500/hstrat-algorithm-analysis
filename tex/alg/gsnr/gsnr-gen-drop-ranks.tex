@@ -1,5 +1,12 @@
 \begin{algorithm}
 \caption{Geometric Sequence $n$th Root Stratum Discard Generator}
 \label{alg:geom-seq-nth-root-gen-drop-ranks}
-% STUB ALGORITHM
+\begin{algorithmic}[1]
+    \Require{ $\colorT \in \mathbb{N}_{\geq0}$ -- current logical time }
+    \Require{ $a \in \mathbb{N}_{\geq1}$ -- the collection size parameter desired }
+    \Ensure{ $\colorTbar \in [0 \twodots \colorT)$ -- data items to drop, if any } 
+    \If{$\colorT > 0$}
+      \State \textbf{yield from} $\colorK^{\mathsf{GSNR}}_a(\colorT - 1) \setminus \colorK^{\mathsf{GSNR}}_a(\colorT)$
+    \EndIf
+\end{algorithmic}
 \end{algorithm}

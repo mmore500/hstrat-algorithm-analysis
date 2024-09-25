@@ -8,14 +8,14 @@ Figure \ref{fig:retention-policies} includes a time-lapse of the extant record u
 The set of items retained under curbed recency-proportional resolution is defined as,
 %TODO checkme
 \begin{align}
-\mathsf{CRPR\_kept}(\colorT)
+\colorK^{\mathsf{CRPR}}_a(\colorT)
 &=
 \begin{cases}
-\mathsf{RPR\_kept}_r(\colorT)
+\colorK^{\mathsf{RPR}}_r(\colorT)
 \text{ where }
-r = \left \lfloor \frac{m}{\left\lceil \log_2(\colorT) \right\rceil} - 1 \right\rfloor
- & \text{ if } \colorT \leq \left\lfloor \frac{2^{\lfloor m/3 \rfloor}}{2} \right\rfloor \\
-\mathsf{GSNR\_kept}_m(\colorT)
+r = \left \lfloor \frac{a}{\left\lceil \log_2(\colorT) \right\rceil} - 1 \right\rfloor
+ & \text{ if } \colorT \leq \left\lfloor 2^{\lfloor a/3 \rfloor - 1} \right\rfloor \\
+\colorK^{\mathsf{GSNR}}_a(\colorT)
 & \text{ otherwise.}
 \end{cases}
 \label{eqn:crpr_kept}

@@ -2,11 +2,10 @@
 \caption{Fixed Resolution Drop Ranks Enumeration}
 \label{alg:fixed-resolution-algo-gen-drop-ranks}
 \begin{algorithmic}[1]
-    \Require{ $n \in \mathbb{N}_{\geq0}$ -- the number of strata deposited }
-    \Require{ $r \in \mathbb{N}_{>0}$  -- the fixed resolution desired }
-    \Ensure{ dropped strata, if any }
-    \If{$n > 0$ and $n - 1 \bmod r > 0$}
-      \State \textbf{yield} n - 1
+    \Require{ $\colorT \in \mathbb{N}_{\geq0}$ -- current logical time }
+    \Require{ $r \in \mathbb{N}_{\geq1}$ -- the fixed resolution desired }
+    \Ensure{ $\colorTbar \in [0 \twodots \colorT)$ -- data items to drop, if any }    \If{$\colorT > 0$ and $\colorT - 1 \bmod r > 0$}
+      \State \textbf{yield} \colorT - 1
     \EndIf
 \end{algorithmic}
 \end{algorithm}
