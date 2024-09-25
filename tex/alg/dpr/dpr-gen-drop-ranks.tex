@@ -2,21 +2,20 @@
 \caption{Depth-proportional Resolution Discard Generator}
 \label{alg:depth-proportional-resolution-algo-gen-drop-ranks}
 \begin{algorithmic}[1]
-    \Require{ $\texttt{n}$ -- the number of strata deposited }
-    \Require{ $\texttt{r}$ -- the fixed resolution desired }
-    \Ensure{ array of dropped strata }
+    \Require{ $\colorT \in \mathbb{N}_{\geq0}$ -- current logical time }
+    \Require{ $r \in \mathbb{N}_{\geq1}$ -- the depth-proportional resolution desired }
+    \Ensure{ $\colorTbar \in [0 \twodots \colorT)$ -- data items to drop, if any }
 
-    \State $\texttt{curr\_uncertainty} \gets (\text{largest integral power of two} \le \frac{n}{r + 2}) \lor 1$
-    \State $\texttt{prev\_uncertainty} \gets (\text{largest integral power of two} \le \frac{n}{r + 1}) \lor 1$
-    \State $\texttt{arr} \gets \text{empty array of length } \frac{n}{\texttt{uncertainty}} + 1$
+    \State $r \gets \max\Big(\Call{BitFloor}{\frac{\colorT}{r}}, 1\Big)$
+    \State $r' \gets \max\Big(\Call{BitFloor}{\frac{\colorT - 1}{r}}, 1\Big)$
 
-    \If{$\texttt{curr\_uncertainty} \neq \texttt{prev\_uncertainty}$}
-        \For{$i = \texttt{prev\_uncertainty}$ \textbf{to} $\texttt{n} - 2$ \textbf{step} $\text{curr\_uncertainty}$}
-            \State $\texttt{arr} [$i$] \gets i$
-        \EndFor
+    \If{$\colorT - 1 \bmod r \neq 0$}
+        \State \textbf{yield} $\colorT - 1$
     \EndIf
-    \If{$\texttt{n} - 2 \bmod \texttt{curr\_uncertainty} \neq 0$}
-        \State $\texttt{\texttt{last\_rank}} [\texttt{n} - 2] \gets \texttt{n} - 2$
+    \If{$r \neq r'$}
+        \For{$i = r'$ \textbf{to} $\colorT - 2$ \textbf{step} $r$}
+            \State \textbf{yield} $i$
+        \EndFor
     \EndIf
 \end{algorithmic}
 \end{algorithm}
