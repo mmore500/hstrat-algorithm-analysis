@@ -9,6 +9,7 @@
 \State $r \gets \left\lfloor \frac{m}{\left\lceil \log_2(\colorT) \right\rceil} - 1 \right\rfloor$
 \If{$\colorT \leq \left\lfloor2^{\left\lfloor a/3 \right\rfloor - 1} \right\rfloor$}
   \State \textbf{yield from} $\colorK^{\mathsf{RPR}}_r(\colorT)$
+\Else
   \State \textbf{yield from} $\colorK^{\mathsf{GSNR}}_m(\colorT)$
 \EndIf
 \end{algorithmic}
