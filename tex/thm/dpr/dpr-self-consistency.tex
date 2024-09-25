@@ -1,11 +1,11 @@
 \begin{theorem}{Depth-proportional Algorithm Self-Consistency}
 \label{thm:depth-proportional-algo-self-consistency}
-Let $\mathsf{DPR\_kept}(n)$ be the set of data points retained at time point $n$, defined per Equation \ref{eqn:dpr_kept}.
+Let $\colorK^{\mathsf{DPR}}_r(n)$ be the set of data points retained at time point $n$, defined per Equation \ref{eqn:dpr_kept}.
 Showing self-consistency requires that we demonstrate $\forall m \geq 0, n \in [0 \twodots m)$,
 \begin{align*}
-\mathsf{DPR\_kept}(n)
+\colorK^{\mathsf{DPR}}_r(n)
 \geq
-\mathsf{DPR\_kept}(m)
+\colorK^{\mathsf{DPR}}_r(m)
 \setminus
 \mathsf{future}(n, m).
 \end{align*}
@@ -16,7 +16,7 @@ where $\mathsf{future}(n, m) = [n \twodots m - 1)$.
 \label{prf:depth-proportional-algo-self-consistency}
 Our goal is equivalent to showing that $\forall m \geq 0, n \in [0 \twodots m)$,
 \begin{align*}
-\mathsf{DPR\_kept}(n) \cup \mathsf{future}(n, m) \geq \mathsf{DPR\_kept}(m).
+\colorK^{\mathsf{DPR}}_r(n) \cup \mathsf{future}(n, m) \geq \colorK^{\mathsf{DPR}}_r(m).
 \end{align*}
 
 Let
@@ -36,10 +36,10 @@ R_m \bmod R_n = 0.
 \label{eqn:rmrn0}
 \end{align}
 
-Suppose $\colorTbar \in \mathsf{DPR\_kept}(m)$.
+Suppose $\colorTbar \in \colorK^{\mathsf{DPR}}_r(m)$.
 In this case, at least one of the following is true (A) $k = m - 1$ or (B) $k \bmod R_m = 0$.
 
 In the first case, $\colorTbar \stackrel{\checkmark}{\in} \mathsf{future}(n, m)$.
 In the second case, we may conclude from Equation \ref{eqn:rmrn0} that $\colorTbar \bmod R_n = 0$.
-So, $\colorTbar \stackrel{\checkmark}{\in} \mathsf{DPR\_kept}(n)$.
+So, $\colorTbar \stackrel{\checkmark}{\in} \colorK^{\mathsf{DPR}}_r(n)$.
 \end{proof}

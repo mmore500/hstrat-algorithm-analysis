@@ -9,16 +9,16 @@ The set of items retained under curbed recency-proportional resolution is define
 %TODO checkme
 \begin{align}
 \colorK^{\mathsf{CRPR}}_a(\colorT)
-&=
+&\coloneq
 \begin{cases}
 \colorK^{\mathsf{RPR}}_r(\colorT)
 \text{ where }
-r = \left \lfloor \frac{a}{\left\lceil \log_2(\colorT) \right\rceil} - 1 \right\rfloor
+r \coloneq \left \lfloor \frac{a}{\left\lceil \log_2(\colorT) \right\rceil} - 1 \right\rfloor
  & \text{ if } \colorT \leq \left\lfloor 2^{\lfloor a/3 \rfloor - 1} \right\rfloor \\
 \colorK^{\mathsf{GSNR}}_a(\colorT)
 & \text{ otherwise.}
 \end{cases}
-\label{eqn:crpr_kept}
+% \label{eqn:crpr_kept}
 \end{align}
 
 The GSNR algorithm sustains best-effort recency-proportional resolution to asymptotic limits, but distributes retained observations less effectively than RPR in earlier periods.

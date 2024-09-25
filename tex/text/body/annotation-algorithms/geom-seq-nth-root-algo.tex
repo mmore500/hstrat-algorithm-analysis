@@ -49,7 +49,7 @@ To begin, let us take the binary floor of half $n^{x/a}$,
 % addendum: we no longer have preliminaries
 \begin{align*}
   \kappa(n)
-  &=
+  &\coloneq
   \left\lfloor \frac{n^{x/a}}{2} \right\rfloor_{\mathrm{bin}}.
 \end{align*}
 We will retain recent time points that are multiples of this value $\kappa$.
@@ -58,7 +58,7 @@ Note that $n$ strictly increasing implies $\kappa(n)$ monotonically increasing.
 Let's define a floor $B$ to help place our backstop $\beta$,
 \begin{align*}
   B(n)
-  &=
+  &\coloneq
   \max \left(
     n - \left\lceil  \frac{3n^{x/a}}{2} \right\rceil,
     0
@@ -70,7 +70,7 @@ Again, with $x < a$, $n$ strictly increasing implies $B(n)$ monotonically increa
 Rounding $B$ up to the next time point aligned to cadence $\kappa$ gives our backstop time point $\beta$,
 \begin{align*}
   \beta(n)
-  &=
+  &\coloneq
   B(n) + \big(-B(n) \bmod \kappa(n)\big).
 \end{align*}
 % ELD: there's a weird gap in this equation, but it's probably not worth worrying about
@@ -80,9 +80,10 @@ It can be shown that $\beta(n) \leq n^{x/a}$.
 Because $B(n)$ is monotonically increasing, $\beta(n)$ is as well.
 
 We will retain the time point set $S_x$ comprising multiples of $\kappa$ at or after the backstop $\beta$,
-\begin{align*}
-  S_x(n) = \{\, t \mid \beta(n) \leq t < n \text{ and } t \bmod \kappa(n) = 0 \,\}.
-\end{align*}
+\begin{align}
+  S_x(n) \coloneq \{\, t \mid \beta(n) \leq t < n \text{ and } t \bmod \kappa(n) = 0 \,\}.
+  \label{eqn:gsnr_sxn}
+\end{align}
 
 Why does this construction for target $n^{x/a}$ satisfy our $\mathcal{O}(1)$ space complexity constraint?
 It can be shown that $|S_x(n)| \leq 6$.
@@ -126,12 +127,12 @@ Because backstop $\beta \leq n - n ^{x/a}$, the target time point is covered wit
 % Theorem \ref{thm:geom-seq-nth-root-algo-uncertainty-bound} details this point.
 
 We bring curated sets for each target point together in a set union to produce the overall GSNR retained set $R$,
-\begin{align}
+\begin{align*}
   \colorK^{\mathsf{GSNR}}_{a}(\colorT)
-  &=
-  \bigcup_{i=0}^{a} S_i(n).
+  &\coloneq
+  \bigcup_{x=0}^{a} S_x(n).
 \label{eqn:gsrn_kept}
-\end{align}
+\end{align*}
 Note that under this construction, policy algorithm self-consistency and extant record size bounds follow from those shown for constructions for individual targets $n^{x/a}$.
 We demonstrate self-consistency over elapsed time $\colorT$ in Suplementary Theorem \ref{thm:geom-seq-nth-root-algo-self-consistency}.
 \footnote{

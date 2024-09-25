@@ -1,12 +1,12 @@
 % TODO: missing proof
 \begin{theorem}{Geometric Sequence $n$th Root Self-Consistency}
 \label{thm:geom-seq-nth-root-algo-self-consistency}
-Let $\mathsf{GSNR\_kept}(n)$ be the set of data points retained at time point $n$, defined per Equation \ref{eqn:gsnr_kept}.
+Let $\colorK^{\mathsf{GSNR}}_a(n)$ be the set of data points retained at time point $n$, defined per Equation \ref{eqn:gsnr_kept}.
 Showing self-consistency requires that we demonstrate $\forall m \geq 0, n \in [0 \twodots m)$,
 \begin{align*}
-\mathsf{GSNR\_kept}(n)
+\colorK^{\mathsf{GSNR}}_a(n)
 \geq
-\mathsf{GSNR\_kept}(m)
+\colorK^{\mathsf{GSNR}}_a(m)
 \setminus
 \mathsf{future}(n, m).
 \end{align*}
@@ -14,7 +14,15 @@ Showing self-consistency requires that we demonstrate $\forall m \geq 0, n \in [
 
 \begin{proof}
 \label{prf:geom-seq-nth-root-algo-self-consistency}
-Showing our self-consistency for all $S_x(n)$ implies self-consistency for $\mathsf{GSNR\_kept}(\colorT)$.
+Recall that
+\begin{align*}
+  \colorK^{\mathsf{GSNR}}_{a}(\colorT)
+  &\coloneq
+  \bigcup_{x=0}^{a} S_x(n).
+\end{align*}
+with $S_x(n)$ defined per Equation \ref{eqn:gsnr_sxn}.
+
+Showing our self-consistency for all $S_x(n)$ implies self-consistency for $\colorK^{\mathsf{GSNR}}_a(\colorT)$.
 So, let's consider a subset component $S_x(n)$ individually.
 
 Why are time points $S_x(n)$ guaranteed to be a subset of $S_x(n-1) \cup \{n\}$ (i.e., self-consistency)?
