@@ -24,12 +24,12 @@ Resolution for any given layer age, however, remains constant for all record dep
 The set of items retained under recency-proportional resolution is defined as,
 \begin{align}
 \colorK^{\mathsf{RPR}}_r(\colorT)
-&= \{
+&\coloneq \{
 \colorTbar \in [0\twodots\colorT)
 : \colorTbar \bmod R = 0 \text{ or } \colorTbar = \colorT - 1
 \}
 \text{ where }
-R = \max\Big(\left \lfloor \frac{\colorT  - 1 - \colorTbar}{r + 1} \right \rfloor_{\mathrm{bin}}, \;\; 1\Big).
+R \coloneq \max\Big(\left \lfloor \frac{\colorT  - 1 - \colorTbar}{r + 1} \right \rfloor_{\mathrm{bin}}, \;\; 1\Big).
 \label{eqn:rpr_kept}
 \end{align}
 We demonstrate self-consistency over elapsed time $\colorT$ in Suplementary Theorem \ref{thm:recency-proportional-algo-self-consistency}.

@@ -8,13 +8,13 @@ Alternatively, DPR can be seen as interspersing the historical record with a fix
 
 The set of items retained under depth-proportional resolution is defined as,
 \begin{align}
-\mathsf{DPR\_kept}(\colorT)
-&= \{
+\colorK^{\mathsf{DPR}}_r(\colorT)
+&\coloneq \{
 \colorTbar \in [0\twodots\colorT)
 : \colorTbar \bmod R = 0 \text{ or } \colorTbar = \colorT - 1
 \}
 \text{ where }
-R = \max(\left \lfloor \colorT / r \right \rfloor_{\mathrm{bin}}, \;\; 1).
+R \coloneq \max(\left \lfloor \colorT / r \right \rfloor_{\mathrm{bin}}, \;\; 1).
 \label{eqn:dpr_kept}
 \end{align}
 We demonstrate self-consistency over elapsed time $\colorT$ in Suplementary Theorem \ref{thm:depth-proportional-algo-self-consistency}.
