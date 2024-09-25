@@ -50,7 +50,7 @@ To begin, let us take the binary floor of half $n^{x/a}$,
 \begin{align*}
   \kappa(n)
   &=
-  2^{\lfloor \log_{2}(n^{x/a}/2) \rfloor}.
+  \left\lfloor \frac{n^{x/a}}{2} \right\rfloor_{\mathrm{bin}}.
 \end{align*}
 We will retain recent time points that are multiples of this value $\kappa$.
 Note that $n$ strictly increasing implies $\kappa(n)$ monotonically increasing.
