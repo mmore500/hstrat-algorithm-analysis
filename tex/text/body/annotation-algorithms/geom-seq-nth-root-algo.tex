@@ -80,9 +80,10 @@ It can be shown that $\beta(n) \leq n^{x/a}$.
 Because $B(n)$ is monotonically increasing, $\beta(n)$ is as well.
 
 We will retain the time point set $S_x$ comprising multiples of $\kappa$ at or after the backstop $\beta$,
-\begin{align*}
+\begin{align}
   S_x(n) \coloneq \{\, t \mid \beta(n) \leq t < n \text{ and } t \bmod \kappa(n) = 0 \,\}.
-\end{align*}
+  \label{eqn:gsnr_sxn}
+\end{align}
 
 Why does this construction for target $n^{x/a}$ satisfy our $\mathcal{O}(1)$ space complexity constraint?
 It can be shown that $|S_x(n)| \leq 6$.

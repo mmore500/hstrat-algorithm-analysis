@@ -1,11 +1,11 @@
 \begin{theorem}{Recency-proportional Algorithm Self-Consistency}
 \label{thm:recency-proportional-algo-self-consistency}
-Let $\mathsf{RPR\_kept}(n)$ be the set of data points retained at time point $n$, defined per Equation \ref{eqn:dpr_kept}.
+Let $\colorK^{\mathsf{RPR}}_r(n)$ be the set of data points retained at time point $n$, defined per Equation \ref{eqn:dpr_kept}.
 Showing self-consistency requires that we demonstrate $\forall m \geq 0, n \in [0 \twodots m)$,
 \begin{align*}
-\mathsf{RPR\_kept}(n)
+\colorK^{\mathsf{RPR}}_r(n)
 \geq
-\mathsf{RPR\_kept}(m)
+\colorK^{\mathsf{RPR}}_r(m)
 \setminus
 \mathsf{future}(n, m).
 \end{align*}
@@ -16,7 +16,7 @@ where $\mathsf{future}(n, m) = [n \twodots m - 1)$.
 \label{prf:recency-proportional-algo-self-consistency}
 Our goal is equivalent to showing that $\forall m \geq 0, n \in [0 \twodots m)$,
 \begin{align*}
-\mathsf{RPR\_kept}(n) \cup \mathsf{future}(n, m) \geq \mathsf{RPR\_kept}(m).
+\colorK^{\mathsf{RPR}}_r(n) \cup \mathsf{future}(n, m) \geq \colorK^{\mathsf{RPR}}_r(m).
 \end{align*}
 
 Let
@@ -36,10 +36,10 @@ R_m \bmod R_n = 0.
 \label{eqn:rmrn0a}
 \end{align}
 
-Suppose $\colorTbar \in \mathsf{RPR\_kept}(m)$.
+Suppose $\colorTbar \in \colorK^{\mathsf{RPR}}_r(m)$.
 In this case, at least one of the following is true (A) $k = m - 1$ or (B) $k \bmod R_m = 0$.
 
 In the first case, $\colorTbar \stackrel{\checkmark}{\in} \mathsf{future}(n, m)$.
 In the second case, we may conclude from Equation \ref{eqn:rmrn0a} that $\colorTbar \bmod R_n = 0$.
-So, $\colorTbar \stackrel{\checkmark}{\in} \mathsf{RPR\_kept}(n)$.
+So, $\colorTbar \stackrel{\checkmark}{\in} \colorK^{\mathsf{RPR}}_r(n)$.
 \end{proof}

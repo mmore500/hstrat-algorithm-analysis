@@ -1,11 +1,11 @@
 \begin{theorem}{Fixed Resolution Algorithm Self-Consistency}
 \label{thm:fixed-resolution-algo-self-consistency}
-Let $\mathsf{FR\_kept}(n)$ be the set of data points retained at time point $n$, defined per Equation \ref{eqn:fr_kept}.
+Let $\colorK^{\mathsf{FR}}_r(n)$ be the set of data points retained at time point $n$, defined per Equation \ref{eqn:fr_kept}.
 Showing self-consistency requires that we demonstrate $\forall m \geq 0, n \in [0 \twodots m)$,
 \begin{align*}
-\mathsf{FR\_kept}(n)
+\colorK^{\mathsf{FR}}_r(n)
 \geq
-\mathsf{FR\_kept}(m)
+\colorK^{\mathsf{FR}}_r(m)
 \setminus
 \mathsf{future}(n, m).
 \end{align*}
@@ -16,12 +16,12 @@ where $\mathsf{future}(n, m) = [n \twodots m - 1)$.
 \label{prf:fixed-resolution-algo-self-consistency}
 Our goal is equivalent to showing that $\forall m \geq 0, n \in [0 \twodots m)$,
 \begin{align*}
-\mathsf{FR\_kept}(n) \cup \mathsf{future}(n, m) \geq \mathsf{FR\_kept}(m).
+\colorK^{\mathsf{FR}}_r(n) \cup \mathsf{future}(n, m) \geq \colorK^{\mathsf{FR}}_r(m).
 \end{align*}
 
-Suppose $k \in \mathsf{FR\_kept}(m)$.
+Suppose $k \in \colorK^{\mathsf{FR}}_r(m)$.
 In this case, at least one of the following is true (A) $k = m - 1$ or (B) $k \bmod r = 0$.
 
 In the first case, $k \stackrel{\checkmark}{\in} \mathsf{future}(n, m)$.
-In the second case, $k \stackrel{\checkmark}{\in} \mathsf{FR\_kept}(n)$.
+In the second case, $k \stackrel{\checkmark}{\in} \colorK^{\mathsf{FR}}_r(n)$.
 \end{proof}
