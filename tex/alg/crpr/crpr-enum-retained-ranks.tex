@@ -5,7 +5,7 @@
 \begin{algorithmic}[1]
 \Require{ $\colorT \in \mathbb{N}_{\geq0}$ -- current logical time }
 \Require{ $a \in \mathbb{N}_{\geq1}$ -- the collection size parameter desired }
-\Ensure{ $\colorTbar \in [0 \twodots \colorT)$ -- data items to drop, if any }    
+\Ensure{ $\colorTbar \in [0 \twodots \colorT)$ -- data items to drop, if any }
 \State $r \gets \left\lfloor \frac{m}{\left\lceil \log_2(\colorT) \right\rceil} - 1 \right\rfloor$
 \If{$\colorT \leq \left\lfloor2^{\left\lfloor a/3 \right\rfloor - 1} \right\rfloor$}
   \State \textbf{yield from} $\colorD^{\mathsf{RPR}}_r(\colorT)$
