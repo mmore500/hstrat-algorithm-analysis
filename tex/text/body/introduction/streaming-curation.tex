@@ -78,7 +78,18 @@ The depth-proportional resolution structure has appeared additionally in ``pyram
 To our knowledge, these previous implementations all unfold through stateful iteration, with representational overhead for each stored value (e.g., timestamps, segment length values); stateless enumerations of retained set composition are original to our work in this paper.
 We are also not aware of existing equivalents or near-equivalents of the presented geometric sequence $n$th root and curbed recency-proportional resolution policy algorithms (Sections \ref{sec:geom-seq-nth-root-algo} and \ref{sec:curbed-recency-proportional-resolution-algo}).
 
-Work on ``amnesic approximation'' tackles a similar end goal, but has only loose technical overlap.
+Separate, follow-on work has explored optimizations specializing on the fixed-capacity case \citep{moreno2024structured}.
+Essentially, instead of managing stored data items based on their observation time as done here, the ``surface-based'' approach applied in \citep{moreno2024structured} drops down a level of abstraction to orchestrate curation based solely on data items' position within a specified fixed-size buffer.
+Thus, need to decode or store data items' observation times on an ingest-to-ingest basis is eschewed.
+As a further optimization, the surface-based approach --- data items are never moved and are discarded solely when they are overwritten.
+As such, unlike present work, the surface-based approach can guarantee that all available buffer space is fully utilized to store data.
+
+For these reasons, the surface-based approach taken in \citet{moreno2024algorithms} will be preferred in practice for many scenarios.
+However, as a substantial limitation, the surface-based algorithm for tilted retention currently support ingesting only the first $2^\mathsf{buffer\_size}$ items of a data stream.
+Although this limitation may be addressed in future work with surface-based algorithms, the fixed-capacity stream curation approaches for tilted retention described here have no such restrictions on stream duration.
+Additionally, whereas the surface-based approaches inherently support fixed-capacity retention, present work additionally explores scenarios where storage capacity is allowed to scale with stream duration.
+
+Work on ``amnesic approximation'' tackles a similar end goal to present work, but has only loose technical overlap.
 \cite{palpanas2004online} provides a generalized scheme to incrementally down-sample a data stream pursuant to a user-defined time-back-to-value function by means of a stateful iterative process.
 
 \subsubsection{Applications of Stream Curation}
