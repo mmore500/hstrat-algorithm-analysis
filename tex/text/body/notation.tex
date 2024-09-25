@@ -1,0 +1,100 @@
+\section{Preliminaries, Notations, and Terminology} \label{sec:notation}
+
+The core function of proposed algorithms ``stream curation,'' to dynamically filter out a subset of incoming data that ensures the structure of gaps in history created by discarding items respects some desiderata.
+Be reminded that this framing considers data items solely with respect to their logical sequence position, and disregard their actual semantic values.
+Incoming data is assumed to arrive on a rolling basis, as a \textbf{data stream} comprised of sequential \textbf{data items} $v_i$.
+We presume the data stream to be transient (i.e., "read once"), and describe the process of reading an item from the data stream as ingesting it.
+
+This section lays out key notations used throughout this work, summarized in Table \ref{tab:notation}.
+
+\input{tab/notation.tex}
+
+\subsection{Logical Time $\colorT$ and Item Ingest Time $\colorTbar$}
+\label{sec:notation-time}
+
+We will refer to each data item's stream sequence index as its \textbf{ingest time} $\colorTbar$ and the number of items ingested as the \textbf{current logical time} $\colorT$.
+In other contexts, a data item's ingest time $\colorTbar$ might be referred to as its ``sequence position'' within the data stream.
+However, we avoid that terminology to prevent confusion of sequence position with buffer position $\colork$.
+
+We use a zero-indexing convention.
+Logical time begins at $\colorT=0$, when no data items have yet been ingested.
+The first element of the data stream $v_0$ is assigned ingestion time $\colorTbar=0$.
+After the first item $v_0$ is ingested, logical time advances to $\colorT=1$.
+We assume $\colorT$ to be known at every point, which can be accomplished trivially in practice with a simple counter.
+Because we are only concerned with the sequence order of data items (and not their actual data values), we will shorthand $\colorTbar$ as referring to $v_{\colorTbar}$ (i.e., the data item ingested at that time).
+
+\subsection{Dropped Item Enumeration $\colorD(\colorT)$}
+\label{sec:dropped-item-enumeration}
+
+Each time a new data item $\colorTbar = \colorT$ is ingested, the active policy algorithm decides which, if any, of retained data items $\colorTbar < \colorT$ should be discarded.
+We refer to this as the set of \textbf{dropped items} $\colorD(\colorT)$.
+By definition, $\colorD(\colorT) \subseteq [0\twodots\colorT)$,
+
+Note that we do not allow items to be dropped multiple times.
+That is, for any $\colorT_1, \; \colorT_2 \in \mathbb{N}$ where $\colorT_1 \neq \colorT_2$, we require that $\colorD(\colorT_1) \cap \colorD(\colorT_2) = \emptyset$.
+We call this property \textbf{self-consistency}, meaning that items can not be dropped more than once -- once they're gone, they're gone.
+We will prove self-consistency on an algorithm-by-algorithm basis, although our  focus in analyzing self-consistency will be in terms of kept items, introduced next.
+
+\subsection{Kept Item Enumeration $\colorK(\colorT)$}
+\label{sec:kept-item-enumeration}
+
+We define \textbf{kept items} $\colorK(\colorT)$ as the set of items ingested but not discarded.
+Formally,
+\begin{align*}
+\colorK(\colorT)
+= [0\twodots\colorT) \setminus \bigcup_{\colorT' \in [0\twodots \colorT)} \colorD(\colorT').
+\end{align*}
+
+\textbf{Self-consistency} among kept items requires that if an item $\colorTbar$ is to be kept at time $\colorT$, it must have been kept at all time points $\colorT' \geq \colorT$.
+This is because once a data item is discarded, it cannot be recovered.
+Formally, for any $0 \leq \colorT_1 < \colorT_2$,
+\begin{align*}
+\colorK(\colorT_2)
+\subseteq
+\colorK(\colorT_1) \cup [\colorT_1 \twodots \colorT_2).
+\end{align*}
+
+\subsection{Application in Practice}
+%TODO move elsewhere?
+
+While we provide algorithms implementing both $\colorK(\colorT)$ and $\colorD(\colorT)$ for all algoriths, we analyze algorithms primarily in terms of $\colorK(\colorT)$.
+However, the availability of both algorithms is important.
+Having $\colorK$ and $\colorD$ allows data items to be managed stored contiguously in an array in chronological order without timestamps.
+This can be important for data items that are very small, where the overhead of timestamps or other data structure (e.g., pointers) would be substantial.
+In this case, $\colorK(\colorT)$ is essential for identifying stored data items.
+Alternately, using just $\colorD(\colorT)$ the data items can be stored in a hash map.
+Under such a scheme, data items would be stored with the mapping $\colorTbar \to v_{\colorTbar}$.
+Then, each time step, the newly ingested item $\colorTbar = \colorT$ would be stored and dropped data items $\colorD(\colorT)$ would be deleted from the hash map.
+
+\subsection{Gap Size $\colorg$}
+\label{sec:notation-gapsize}
+
+% Be reminded that \textit{coverage criteria} for retained data items considered here operate solely in terms of items' time indices $\colorTbar$.
+We define coverage criteria in terms of \textbf{gap sizes} in the retained record.
+Formally, we define gap size as a count of consecutive data items that have been discarded or overwritten.
+Let $\colorBnot_{\colorT}$ refer to data items discarded up to that point $\colorT$.
+Gap size for record index $\colorTbar \in [0 \twodots \colorT)$ at time $\colorT$ follows as
+\begin{align}
+\colorG_{\colorT}(\colorTbar)
+&\coloneq
+\max
+\{
+  i + j
+  \text{ for }
+  i,\;\; j \in \mathbb{N}
+  :
+  [\colorTbar-i \twodots \colorTbar+j) \subseteq \colorBnot_{\colorT}
+\}.
+\label{eqn:gap-size-defn}
+\end{align}
+Note that if $\colorTbar \in \colorK(\colorT)$, then $\colorG_{\colorT}(\colorTbar) = 0$.
+
+\subsection{Miscellania}
+
+Algorithm listings refer to a handful of utility helper functions (e.g., \textsc{BitFloor}, \textsc{BitCeil}, etc.).
+Refer to Supplementary Section \ref{sec:pseudocode} for full definitions of these.
+
+We denote the binary floor of a value $x$ as $\left\lfloor x \right\rfloor_\mathrm{bin} = 2^{\left\lfloor \log_2 x \right\rfloor}$.
+For binary ceiling, $\left\lceil x \right\rceil_\mathrm{bin} = 2^{\left\lceil \log_2 x \right\rceil}$.
+Take $\left\lfloor x \right\rfloor_\mathrm{bin} = \left\lceil x \right\rceil_\mathrm{bin} = 0$.
+Finally, take $\{2^{\mathbb{N}}\}$ as shorthand for $\{2^n : n \in \mathbb{N} \}$.

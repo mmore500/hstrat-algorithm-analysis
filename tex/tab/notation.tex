@@ -1,0 +1,23 @@
+\begin{table}[]
+\begin{tabular}{lllll}
+\hline
+\textit{Description} & \textit{Type} & \textit{Notation} & \textit{Definition} & \textit{Domain} \\ \hline
+\rowcolor{gray!20}
+\multicolumn{5}{c}{\textbf{Time}} \\ \hline
+Current Time & int & $\colorT$ & num elapsed data item ingests & $\in \mathbb{N}$ \\
+Data Item Ingest Time & int & $\colorTbar$ & num ingests preceding data item & $\in [0 \twodots \colorT)$ \\ \hline
+\rowcolor{gray!20}
+\multicolumn{5}{c}{\textbf{Curation Policy}} \\ \hline
+Kept Item Enumeration & seq & $\colorK(\colorT)$ & algorithm-defined & $\subseteq [0 \twodots \colorT)$ \\
+\makecell[l]{Dropped Item Enumeration\\~} & \makecell[l]{seq\\~} & \makecell[l]{$\colorD(\colorT)$\\~} &  \makecell[l]{items discarded while ingesting $\colorTbar=\colorT$\\ i.e., \footnotesize $\colorK(\colorT + 1) \setminus ( \{\colorT + 1\} \cup \colorK(\colorT + 1) )$} & \makecell[l]{$\subseteq [0 \twodots \colorT)$\\~} \\ \hline
+\rowcolor{gray!20}
+\multicolumn{5}{c}{\textbf{Curation Quality}} \\ \hline
+Discarded Data Items & set & $\colorBnot_{\colorT}$ & $[0\twodots\colorT) \setminus \colorK(\colorT)$ & $\subseteq [0\twodots\colorT)$ \\
+Gap Size in Curated Collection & int & $\colorg = \colorG_{\colorT}(\colorTbar)$ & Formula \ref{eqn:gap-size-defn} & $\in [0 \twodots \colorT)$
+\end{tabular}
+\centering
+\caption{
+Summary of notation used.
+}
+\label{tab:notation}
+\end{table}
