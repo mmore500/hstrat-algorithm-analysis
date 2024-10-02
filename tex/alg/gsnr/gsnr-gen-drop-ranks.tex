@@ -1,10 +1,11 @@
+% https://github.com/mmore500/hstrat/blob/master/hstrat/stratum_retention_strategy/stratum_retention_algorithms/geom_seq_nth_root_algo/_enact/_GenDropRanks_/_GenDropRanks.py
 \begin{algorithm}
 \caption{Geometric Sequence $n$th Root Stratum Discard Generator}
 \label{alg:geom-seq-nth-root-gen-drop-ranks}
 \begin{algorithmic}[1]
     \Require{ $\colorT \in \mathbb{N}_{\geq0}$ -- current logical time }
     \Require{ $a \in \mathbb{N}_{\geq1}$ -- the collection size parameter desired }
-    \Ensure{ $\colorTbar \in [0 \twodots \colorT)$ -- data items to drop, if any } 
+    \Ensure{ $\colorTbar \in [0 \twodots \colorT)$ -- data items to drop, if any }
     \If{$\colorT > 0$}
       \State \textbf{yield from} $\colorK^{\mathsf{GSNR}}_a(\colorT - 1) \setminus \colorK^{\mathsf{GSNR}}_a(\colorT)$
     \EndIf

@@ -1,11 +1,11 @@
-% TODO: missing pseudocode
+% https://github.com/mmore500/hstrat/blob/master/hstrat/stratum_retention_strategy/stratum_retention_algorithms/recency_proportional_resolution_curbed_algo/_enact/_GenDropRanks_/_GenDropRanks.py
 \begin{algorithm}
 \caption{Curbed Recency-proportional Resolution Stratum Discard Generator}
 \label{alg:curbed-recency-proportional-algo-gen-drop-ranks}
 \begin{algorithmic}[1]
 \Require{ $\colorT \in \mathbb{N}_{\geq0}$ -- current logical time }
 \Require{ $a \in \mathbb{N}_{\geq1}$ -- the collection size parameter desired }
-\Ensure{ $\colorTbar \in [0 \twodots \colorT)$ -- data items to drop, if any }    
+\Ensure{ $\colorTbar \in [0 \twodots \colorT)$ -- data items to drop, if any }
 \State $r \gets \left\lfloor \frac{m}{\left\lceil \log_2(\colorT) \right\rceil} - 1 \right\rfloor$
 \If{$\colorT \leq \left\lfloor2^{\left\lfloor a/3 \right\rfloor - 1} \right\rfloor$}
   \State \textbf{yield from} $\colorK^{\mathsf{RPR}}_r(\colorT)$
